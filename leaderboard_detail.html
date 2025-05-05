@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="leaderboard_detail_title">Detailed Leaderboard - Storytelling Benchmark</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Specific styles will be added in css/style.css -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                 <li><a href="index.html" data-lang-key="nav_overview">Overview</a></li>
+                 <li><a href="leaderboard_detail.html" class="active" data-lang-key="nav_leaderboard_detail">Detailed Leaderboard</a></li> <!-- New Nav Link -->
+                 <li><a href="metrics.html" data-lang-key="nav_metrics">Metrics Definition</a></li>
+                 <li><a href="dataset.html" data-lang-key="nav_dataset">Dataset</a></li>
+                 <li><a href="story_detail.html" data-lang-key="nav_explorer">Result Explorer</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <button id="lang-en-btn">English</button>
+                <button id="lang-zh-btn">中文</button>
+            </div>
+        </nav>
+        <h1 data-lang-key="leaderboard_detail_title">Detailed Leaderboard</h1>
+    </header>
+
+    <main>
+
+
+        <section id="detailed-leaderboard-section">
+            <h2 data-lang-key="leaderboard_detail_results">Results</h2>
+            <!-- <p data-lang-key="leaderboard_expand_hint">Click the '+' icon to view detailed sub-metric scores.</p> -->
+            <div class="table-container"> <!-- Added for potential horizontal scroll on small screens -->
+                <table id="detailed-leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th class="expand-col"></th>
+                            <th data-sortable="text" onclick="sortTable(1, 'text')" data-lang-key="table_model">Model <span class="sort-arrow"></span></th>
+                            <th data-sortable="date" onclick="sortTable(2, 'date')" data-lang-key="table_timestamp">Timestamp <span class="sort-arrow"></span></th>
+                            <th data-sortable="text" data-lang-key="table_dataset">Dataset <span class="sort-arrow"></span></th>
+                             <th data-sortable="text" data-lang-key="table_mode">Mode <span class="sort-arrow"></span></th>
+                            <th data-sortable="number" onclick="sortTable(5, 'number')" data-lang-key="table_cref">CRef <span class="sort-arrow"></span></th>
+                            <th data-sortable="number" onclick="sortTable(6, 'number')" data-lang-key="table_sref">SRef <span class="sort-arrow"></span></th>
+                            <th data-sortable="number" onclick="sortTable(7, 'number')" data-lang-key="table_prompt">Prompt Adh. <span class="sort-arrow"></span></th>
+                            <th data-sortable="number" onclick="sortTable(8, 'number')" data-lang-key="table_quality">Quality <span class="sort-arrow"></span></th>
+                            <th data-sortable="number" onclick="sortTable(9, 'number')" data-lang-key="table_overall">Overall <span class="sort-arrow"></span></th>
+                            <th data-lang-key="table_notes">Notes / Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1 (Main) -->
+                        <tr class="main-row" data-dataset="WildStory_en" data-mode="auto-regressive">
+                            <td class="expand-col"><span class="expand-icon" onclick="toggleDetails('details-row-1')">+</span></td>
+                            <td data-label="Model:"><a href="model_detail.html?model=storygen-v1">StoryGen-V1</a></td>
+                            <td data-label="Timestamp:"><span class="timestamp">2024-07-15 10:00</span></td>
+                             <td data-label="Dataset:">WildStory_en</td>
+                            <td data-label="Mode:">Auto-Regressive</td>
+                            <td data-label="CRef:"><span class="score">0.85</span></td>
+                            <td data-label="SRef:"><span class="score">0.78</span></td>
+                            <td data-label="Prompt Adh.:"><span class="score">0.90</span></td>
+                            <td data-label="Quality:"><span class="score">4.5</span></td>
+                            <td data-label="Overall:"><span class="score high">8.2</span></td>
+                            <td data-label="Notes:">Excellent CRef. <a href="#">[Details]</a></td>
+                        </tr>
+                        <!-- Row 1 (Details - Hidden) -->
+                        <tr class="details-row" id="details-row-1" style="display: none;">
+                            <td colspan="11">
+                                <div class="details-content">
+                                    <dl>
+                                        <dt data-lang-key="cref_title">Character Consistency:</dt>
+                                        <dd>
+                                            aCCS: <span class="score">0.90</span>, 
+                                            ArcFace/AdaFace: <span class="score">0.88</span> (Real), 
+                                            CCIP: <span class="score">N/A</span> (Anime), 
+                                            Grounding+Sim: <span class="score">0.85</span>, 
+                                            DreamSim: <span class="score">0.75</span>, 
+                                            VLM Verify: <span class="score">Pass</span>
+                                            <!-- Add other CRef sub-scores if available -->
+                                        </dd>
+                                        
+                                        <dt data-lang-key="sref_title">Style Consistency:</dt>
+                                        <dd>
+                                            CSD (Self): <span class="score">0.82</span>, 
+                                            CSD (Cross): <span class="score">0.79</span>, 
+                                            VLM Score: <span class="score">4.2/5</span>, 
+                                            ArtFID: <span class="score">15.5</span>
+                                        </dd>
+                                         
+                                         <dt data-lang-key="prompt_title">Prompt Adherence:</dt>
+                                         <dd>
+                                             Entity Presence: <span class="score">Yes</span>, 
+                                             Color Consist.: <span class="score">Yes</span>, 
+                                             Char. Attr.: <span class="score">Match</span>, 
+                                             Action/Behavior: <span class="score">Match</span>, 
+                                             Camera/Shot: <span class="score">Partial Match</span>, 
+                                             Environment: <span class="score">Match</span>, 
+                                             Emotion/Atmosphere: <span class="score">Good Match</span>
+                                         </dd>
+                                         
+                                         <dt data-lang-key="quality_title">Generation Quality:</dt>
+                                         <dd>
+                                             Aesthetic Score: <span class="score">4.8/5</span>, 
+                                             FID: <span class="score">30.1</span> (Real), 
+                                             PickScore: <span class="score">0.70</span>, 
+                                             Degradation: <span class="score">Low</span>
+                                         </dd>
+                                         
+                                         <dt data-lang-key="diversity_title">Diversity:</dt>
+                                         <dd>
+                                             Inception Score: <span class="score">[Score]</span>, 
+                                             CLIP Variance: <span class="score">[Score]</span>
+                                         </dd>
+                                         
+                                         <dt data-lang-key="human_eval_title">Human Evaluation:</dt>
+                                         <dd>
+                                             Cinematography: <span class="score">4.0/5</span>, 
+                                             Narrative Coherence: <span class="score">4.5/5</span>, 
+                                             Visual Coherence: <span class="score">4.2/5</span>, 
+                                             Layout (Comics): <span class="score">N/A</span>
+                                         </dd>
+                                    </dl>
+                                </div>
+                            </td>
+                        </tr>
+
+                         <!-- Row 2 (Main) -->
+                        <tr class="main-row" data-dataset="WildStory_ch" data-mode="auto-regressive">
+                             <td class="expand-col"><span class="expand-icon" onclick="toggleDetails('details-row-2')">+</span></td>
+                            <td data-label="Model:"><a href="model_detail.html?model=storygen-v1">StoryGen-V1</a></td>
+                            <td data-label="Timestamp:"><span class="timestamp">2024-07-15 11:30</span></td>
+                            <td data-label="Dataset:">WildStory_ch</td>
+                             <td data-label="Mode:">Auto-Regressive</td>
+                            <td data-label="CRef:"><span class="score">0.82</span></td>
+                            <td data-label="SRef:"><span class="score">0.75</span></td>
+                            <td data-label="Prompt Adh.:"><span class="score">0.88</span></td>
+                            <td data-label="Quality:"><span class="score">4.4</span></td>
+                            <td data-label="Overall:"><span class="score high">8.0</span></td>
+                             <td data-label="Notes:"><a href="#">[Paper]</a></td>
+                        </tr>
+                         <!-- Row 2 (Details - Hidden) -->
+                        <tr class="details-row" id="details-row-2" style="display: none;">
+                            <td colspan="11">
+                                <div class="details-content">
+                                     <dl>
+                                         <dt data-lang-key="cref_title">Character Consistency:</dt>
+                                         <dd>aCCS: 0.85, ArcFace/AdaFace: 0.80, ... </dd> <!-- Add more placeholders -->
+                                         <dt data-lang-key="sref_title">Style Consistency:</dt>
+                                         <dd>CSD (Self): 0.80, ...</dd>
+                                         <!-- ... other details for row 2 ... -->
+                                     </dl>
+                                 </div>
+                            </td>
+                        </tr>
+
+                         <!-- Row 3 (Main) -->
+                        <tr class="main-row" data-dataset="WildStory_en" data-mode="multi-image-condition">
+                             <td class="expand-col"><span class="expand-icon" onclick="toggleDetails('details-row-3')">+</span></td>
+                            <td data-label="Model:"><a href="model_detail.html?model=consistent-story">ConsistentStory</a></td>
+                            <td data-label="Timestamp:"><span class="timestamp">2024-07-14 09:00</span></td>
+                            <td data-label="Dataset:">WildStory_en</td>
+                             <td data-label="Mode:">Multi-Image Condition</td>
+                            <td data-label="CRef:"><span class="score">0.75</span></td>
+                            <td data-label="SRef:"><span class="score">0.88</span></td>
+                            <td data-label="Prompt Adh.:"><span class="score">0.85</span></td>
+                            <td data-label="Quality:"><span class="score">4.2</span></td>
+                            <td data-label="Overall:"><span class="score medium">7.9</span></td>
+                             <td data-label="Notes:">Strong SRef. <a href="#">[Code]</a></td>
+                        </tr>
+                        <!-- Row 3 (Details - Hidden) -->
+                        <tr class="details-row" id="details-row-3" style="display: none;">
+                             <td colspan="11">
+                                 <div class="details-content">
+                                     <p>Detailed scores for ConsistentStory (WildStory_en)...</p>
+                                 </div>
+                             </td>
+                        </tr>
+
+                        <!-- Row 4 (Main) -->
+                         <tr class="main-row" data-dataset="WildStory_en" data-mode="mix">
+                             <td class="expand-col"><span class="expand-icon" onclick="toggleDetails('details-row-4')">+</span></td>
+                             <td data-label="Model:"><a href="model_detail.html?model=diffusion-adapter">DiffusionAdapter</a></td>
+                            <td data-label="Timestamp:"><span class="timestamp">2024-07-13 14:00</span></td>
+                            <td data-label="Dataset:">WildStory_en</td>
+                             <td data-label="Mode:">Mix</td>
+                             <td data-label="CRef:"><span class="score low">0.65</span></td>
+                             <td data-label="SRef:"><span class="score">0.72</span></td>
+                             <td data-label="Prompt Adh.:"><span class="score">0.88</span></td>
+                             <td data-label="Quality:"><span class="score">4.0</span></td>
+                             <td data-label="Overall:"><span class="score medium">7.1</span></td>
+                              <td data-label="Notes:">Uses adapter method.</td>
+                        </tr>
+                         <!-- Row 4 (Details - Hidden) -->
+                         <tr class="details-row" id="details-row-4" style="display: none;">
+                              <td colspan="11">
+                                  <div class="details-content">
+                                       <p>Detailed scores for DiffusionAdapter (WildStory_en)...</p>
+                                   </div>
+                              </td>
+                         </tr>
+                        <!-- Add more placeholder rows -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-lang-key="footer_text">Storytelling Benchmark © 2024</p>
+    </footer>
+
+    <script src="data/placeholder_data.js"></script>
+    <script src="js/main.js"></script>
+     <script>
+        // JS for expand/collapse will be added to main.js
+        // Sorting/Filtering functions are already in main.js
+    </script>
+</body>
+</html> 

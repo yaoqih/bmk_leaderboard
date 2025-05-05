@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Information - Storytelling Benchmark</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        pre {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto; /* Handle long lines in code blocks */
+        }
+        .data-example img {
+             max-width: 150px;
+             margin: 5px;
+             vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active" data-lang-key="nav_overview">Overview</a></li>
+                <li><a href="leaderboard_detail.html" data-lang-key="nav_leaderboard_detail">Detailed Leaderboard</a></li>
+                <li><a href="metrics.html" data-lang-key="nav_metrics">Metrics Definition</a></li>
+                <li><a href="dataset.html" data-lang-key="nav_dataset">Dataset</a></li>
+                <li><a href="story_detail.html" data-lang-key="nav_explorer">Result Explorer</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <button id="lang-en-btn">English</button>
+                <button id="lang-zh-btn">中文</button>
+            </div>
+        </nav>
+        <h1 data-lang-key="dataset_title">Benchmark Dataset Information</h1>
+    </header>
+
+    <main>
+        <section id="dataset-description">
+            <h2 data-lang-key="dataset_desc">Dataset Details</h2>
+            <p data-lang-key="dataset_source">Source: WildStory (Versions: English, Chinese)</p>
+            <p data-lang-key="dataset_stats">Statistics: [80] stories, Avg. [10-15] shots per story.</p>
+            <p>[Placeholder for more detailed description of the dataset, its characteristics, purpose, and any preprocessing steps.]</p>
+            <p><strong>Data Prerequisites:</strong></p>
+            <ul>
+                <li>CRef images per character: 1-10 (style consistent).</li>
+                <li>Script length per story: 4-30 shots.</li>
+                <li>Max characters per shot: 6.</li>
+                <li>Separate evaluation for realistic and comic styles recommended.</li>
+            </ul>
+        </section>
+
+        <section id="data-structure">
+            <h2>Data Structure (stories_data)</h2>
+            <p>[Placeholder explanation of the main data structure used for stories and characters.]</p>
+            <pre><code>
+stories_data = {
+    "story_id (e.g., 01)": {
+        "type": "[e.g., WildStory_en]",
+        "shots": [
+            {
+                "shot_id": "00",
+                "index": 1,
+                "scene": "[Scene description]",
+                "plot": "[Plot description]",
+                "script": "[Detailed script/prompt for the shot]",
+                "camera": "[Camera angle/shot type, e.g., Medium shot]",
+                "character_key": ["Litte Brown Rabbit", ...],
+                "character_name": ["[Actual name if different]", ...]
+            },
+            // ... more shots
+        ],
+        "characters": {
+            "character_key (e.g., Litte Brown Rabbit)": {
+                "name": "Litte Brown Rabbit",
+                "key": "Litte Brown Rabbit",
+                "prompt": "[Character description prompt]",
+                "tag": "[Any relevant tags]",
+                "num_of_appearance": 16,
+                "images": [
+                    "/path/to/ref/image1.jpg", // Relative path example
+                    "/path/to/ref/image2.jpg",
+                    // ... more reference images
+                ]
+            },
+            // ... more characters
+        }
+    },
+    // ... more stories
+}
+            </code></pre>
+        </section>
+
+        <section id="output-structure">
+             <h2>Output Structure (Benchmark Results)</h2>
+             <p>[Placeholder explanation of how model outputs are stored.]</p>
+            <pre><code>
+dataset_processed:
+    storygen:
+        data_set(WildStory_en, WildStory_ch):
+            story_id(01):
+                shots.json # Potentially processed/evaluated shot data
+
+outputs:
+    storygen:
+        mode("multi-image-condition", "auto-regressive", "mix"):
+            data_set(WildStory_en, WildStory_ch):
+                story_id(01):
+                    time_stamp(20250430-022517):
+                        shot_id.png (e.g., shot_01.png)
+                        # Maybe evaluation results per shot/story here too?
+            </code></pre>
+        </section>
+
+        <section id="data-examples">
+            <h2>Data Examples</h2>
+            <div class="data-example">
+                <p><strong>Example Script (Story 01, Shot 00):</strong> [Placeholder script text...]</p>
+                <p><strong>Example Character (Little Brown Rabbit):</strong>
+                    <img src="img/placeholder.png" alt="Ref 1">
+                    <img src="img/placeholder.png" alt="Ref 2">
+                </p>
+            </div>
+            <!-- Add more examples if needed -->
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-lang-key="footer_text">Storytelling Benchmark © 2025</p>
+    </footer>
+
+    <script src="data/placeholder_data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

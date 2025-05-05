@@ -1,0 +1,633 @@
+/* Basic Reset & Body Style */
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header & Navigation */
+header {
+    background: #333;
+    color: #fff;
+    padding-top: 10px;
+    min-height: 70px;
+    border-bottom: #77aaff 3px solid;
+}
+
+header nav {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo/nav and switcher */
+    align-items: center; /* Vertically align items */
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+header ul {
+    padding: 0;
+    list-style: none;
+    margin: 0; /* Reset margin */
+}
+
+header li {
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header a:hover, header a.active {
+    color: #77aaff;
+    font-weight: bold;
+}
+
+header h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: #fff; /* Ensure h1 text is visible */
+}
+
+.lang-switcher button {
+    background: #555;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+
+.lang-switcher button:hover {
+    background: #77aaff;
+}
+
+/* Main Content Area */
+main {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+section {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #eaeaea;
+}
+
+.score {
+    font-weight: bold;
+    /* Add color coding later based on score ranges */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    color: #aaa;
+    background: #333;
+    color: #fff;
+}
+
+/* Styles for New Sections on index.html */
+#intro, #news, #resources, #about {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+#news ul, #resources ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#news li {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #eee;
+    padding-bottom: 10px;
+}
+#news li:last-child {
+     border-bottom: none;
+}
+#news .date {
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+}
+
+#resources li a {
+    text-decoration: none;
+    color: #337ab7;
+}
+#resources li a:hover {
+    text-decoration: underline;
+}
+
+#about h3 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+#about pre {
+     background-color: #f5f5f5;
+     border: 1px solid #ccc;
+     padding: 10px;
+     border-radius: 4px;
+     white-space: pre-wrap; /* Wrap long lines in citation */
+     word-wrap: break-word;
+}
+
+/* Timestamp column style */
+.timestamp {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Score color coding (Example) */
+.score.high {
+    color: green;
+}
+.score.medium {
+    color: orange;
+}
+.score.low {
+    color: red;
+}
+
+/* === Result Explorer (story_detail.html) NEW Styles === */
+
+/* Input Section Styles (minor adjustments) */
+.input-section {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.input-section > div {
+    flex: 1;
+    min-width: 300px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+.input-section pre {
+    background-color: #f8f8f8; /* Lighter background */
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow-x: auto;
+    max-height: 150px; /* Adjust height as needed */
+    white-space: pre-wrap; /* Ensure script wraps */
+    word-wrap: break-word;
+}
+#shot-indicator-text {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
+.character-refs {
+    min-height: 50px; /* Ensure space even if empty initially */
+}
+.character-refs div {
+    margin-bottom: 5px;
+}
+.character-refs strong {
+     display: inline-block;
+     min-width: 120px; /* Align names */
+}
+.character-refs img {
+    max-width: 70px; /* Slightly smaller refs */
+    height: 70px;
+    object-fit: cover;
+    margin: 2px 5px;
+    border: 2px solid #ccc;
+    vertical-align: middle;
+    border-radius: 3px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.character-refs img.relevant-char {
+    border-color: #77aaff;
+    box-shadow: 0 0 8px rgba(119, 170, 255, 0.7);
+}
+
+/* Global Controls */
+.global-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #e9e9e9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.global-controls button {
+    padding: 8px 15px;
+    cursor: pointer;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+.global-controls button:hover {
+    background-color: #77aaff;
+}
+.carousel-timer { /* Reusing class name, but it's global now */
+    width: 60%;
+    height: 8px;
+    background-color: #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.carousel-progress { /* Reusing class name */
+    width: 0;
+    height: 100%;
+    background-color: #77aaff;
+    transition: width 0.1s linear;
+}
+
+/* Model Selection Section */
+#model-selection-section {
+     background-color: #fff;
+     padding: 15px 20px;
+     margin-bottom: 20px;
+     border-radius: 5px;
+     box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+#model-selection-section h3 {
+     margin-top: 0;
+     margin-bottom: 10px;
+     border-bottom: 1px solid #eee;
+     padding-bottom: 8px;
+}
+.model-selector label {
+    margin-right: 20px;
+    display: inline-block;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+/* Model Results Area */
+#model-results-area {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Space between model rows */
+}
+.model-sequence-container {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* display: block; is default, JS toggles to none */
+}
+.model-sequence-container h4 {
+     margin-top: 0;
+     margin-bottom: 15px;
+     border-bottom: 1px solid #eee;
+     padding-bottom: 10px;
+     color: #333;
+}
+.image-sequence-scroll-container {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden;
+    gap: 10px; /* Space between images */
+    padding: 10px 0;
+    align-items: center; /* Align items vertically */
+    min-height: 120px; /* Ensure container has height */
+
+    /* Optional: Style scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #aaa #eee;
+
+    /* Optional: Scroll snapping */
+    scroll-snap-type: x mandatory;
+}
+
+.sequence-image {
+    height: 100px; /* Default height for unfocused images */
+    width: auto;
+    aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+    object-fit: cover;
+    border: 2px solid transparent; /* Border to prevent layout shift */
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.6; /* Dim unfocused images */
+    transition: all 0.3s ease-in-out;
+    flex-shrink: 0; /* Prevent images from shrinking */
+
+    scroll-snap-align: center; /* Snap images to center */
+}
+
+.sequence-image.focused {
+    height: 150px; /* Larger height for focused image */
+    opacity: 1.0;
+    border-color: #77aaff;
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Responsive adjustments for Explorer */
+@media(max-width: 768px) {
+    .global-controls {
+         flex-wrap: wrap;
+         justify-content: center;
+    }
+    .carousel-timer {
+        width: 100%;
+        order: -1; /* Move timer above buttons */
+        margin-bottom: 10px;
+    }
+    .global-controls button {
+         margin: 5px;
+    }
+
+     .input-section {
+        flex-direction: column;
+    }
+
+     .sequence-image {
+        height: 80px;
+     }
+     .sequence-image.focused {
+         height: 120px;
+     }
+}
+
+/* Remove old Carousel Styles if they conflict */
+/* .carousel-container, .carousel-content, .carousel-model-output, etc. */
+
+
+/* Basic Responsive */
+@media(max-width: 768px) {
+    header nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    header ul {
+        margin-top: 10px;
+    }
+    header li {
+        display: block;
+        padding: 10px 0;
+    }
+    .lang-switcher {
+        margin-top: 10px;
+        align-self: flex-start; /* Align switcher left in column layout */
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+     }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right; /* Align text to the right */
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left; /* Align label to the left */
+    }
+
+    /* Assign data-label in JS or manually for responsive tables */
+
+}
+
+/* === Detailed Leaderboard Styles (leaderboard_detail.html) === */
+
+/* Filters removed - comment out or delete related styles */
+/* #leaderboard-filters { ... } */
+/* .filter-controls { ... } */
+
+#detailed-leaderboard-section h2 {
+     margin-bottom: 10px; /* Reduced margin */
+}
+
+#detailed-leaderboard-section p[data-lang-key="leaderboard_expand_hint"] {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.table-container {
+    overflow-x: auto;
+    background: #fff;
+    padding: 0; /* Remove padding if border handled by table */
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.08);
+    border: 1px solid #ddd; /* Add border to container */
+}
+
+#detailed-leaderboard-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensure borders collapse */
+}
+
+#detailed-leaderboard-table th,
+#detailed-leaderboard-table td {
+    padding: 12px 15px; /* Adjust padding */
+    text-align: left;
+    border-bottom: 1px solid #eee; /* Lighter border between rows */
+    border-left: none;
+    border-right: none;
+}
+
+#detailed-leaderboard-table thead th {
+    background-color: #f8f8f8; /* Slightly lighter header */
+    white-space: nowrap;
+    border-bottom: 2px solid #ddd; /* Stronger border below header */
+    border-top: none;
+}
+#detailed-leaderboard-table th:first-child,
+#detailed-leaderboard-table td:first-child {
+     border-left: none;
+}
+#detailed-leaderboard-table th:last-child,
+#detailed-leaderboard-table td:last-child {
+     border-right: none;
+}
+
+
+#detailed-leaderboard-table th[data-sortable] {
+    cursor: pointer;
+    position: relative;
+}
+
+#detailed-leaderboard-table th[data-sortable]:hover {
+    background-color: #f0f0f0;
+}
+
+.sort-arrow {
+    font-size: 0.8em;
+    margin-left: 5px;
+    display: inline-block;
+    width: 1em;
+    color: #888;
+}
+
+/* Expandable Row Styles */
+.expand-col {
+    width: 30px; /* Fixed width for the icon column */
+    text-align: center;
+    padding-left: 10px !important;
+    padding-right: 5px !important;
+}
+
+.expand-icon {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background-color: #eee;
+    color: #555;
+    user-select: none; /* Prevent text selection */
+}
+
+.expand-icon:hover {
+    background-color: #ddd;
+}
+
+.main-row:hover {
+    background-color: #f9f9f9; /* Hover effect on main row */
+}
+
+.details-row td {
+    background-color: #fafafa; /* Slightly different bg for details */
+    padding: 0 !important; /* Remove padding for the colspan cell */
+    border-bottom: 1px dashed #ddd; /* Dashed border below details */
+}
+
+.details-content {
+    padding: 15px 20px 15px 50px; /* Add left padding for indent effect */
+}
+
+.details-content dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr; /* Label and value columns */
+    gap: 8px 15px; /* Row and column gaps */
+}
+
+.details-content dt {
+    font-weight: bold;
+    color: #444;
+    grid-column: 1;
+    white-space: nowrap;
+}
+
+.details-content dd {
+    margin: 0;
+    grid-column: 2;
+    color: #666;
+    font-size: 0.95em;
+}
+
+/* Link styles inside table */
+#detailed-leaderboard-table td a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+#detailed-leaderboard-table td a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media(max-width: 768px) {
+    /* Keep main responsive table logic if needed */
+    /* ... global responsive table styles ... */
+
+    /* Specific adjustments for details row */
+     .details-content {
+         padding: 10px 15px 10px 25px; /* Reduce padding */
+     }
+     .details-content dl {
+        grid-template-columns: 1fr; /* Stack label/value on small screens */
+        gap: 4px 0;
+     }
+    .details-content dt {
+         margin-bottom: 2px;
+    }
+     .details-content dd {
+         margin-left: 10px; /* Indent value under label */
+     }
+     .expand-col {
+         width: auto; /* Allow icon column to resize */
+     }
+}
+
+/* ... rest of existing styles ... */ 

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="story_detail_title">Result Explorer - Storytelling Benchmark</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Add specific styles for story detail page */
+        .input-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+        .input-section > div {
+            flex: 1; /* Share space */
+            min-width: 300px; /* Minimum width before wrapping */
+        }
+         .character-refs img {
+            max-width: 80px; /* Smaller images for refs */
+            margin: 5px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+        }
+        .model-selector label {
+            margin-right: 15px;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .carousel-shot-info {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .carousel-content {
+            display: flex; /* Layout models side-by-side */
+            gap: 20px;
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
+            padding-bottom: 10px;
+        }
+        .carousel-model-output {
+            flex: 1; /* Each model takes equal space initially */
+            min-width: 250px; /* Minimum width for a model output */
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 4px;
+            display: none; /* Hide all by default, JS will show selected */
+        }
+        .carousel-model-output.active {
+             display: block; /* Show active models */
+        }
+        .carousel-model-output img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+         .carousel-model-output h4 {
+            margin-top: 0;
+            text-align: center;
+         }
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .carousel-controls button {
+            padding: 8px 15px;
+            cursor: pointer;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 3px;
+        }
+        .carousel-controls button:hover {
+            background-color: #77aaff;
+        }
+        .carousel-timer {
+            width: 60%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden; /* For progress bar */
+        }
+        .carousel-progress {
+            width: 0; /* Controlled by JS */
+            height: 100%;
+            background-color: #77aaff;
+            transition: width 0.1s linear; /* Smooth progress */
+        }
+        /* Style for highlighting characters relevant to current shot */
+        .character-refs .relevant-char {
+            border: 2px solid #77aaff;
+            box-shadow: 0 0 5px #77aaff;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html" data-lang-key="nav_overview">Overview</a></li>
+                <li><a href="leaderboard_detail.html" data-lang-key="nav_leaderboard_detail">Detailed Leaderboard</a></li>
+                <li><a href="metrics.html" data-lang-key="nav_metrics">Metrics Definition</a></li>
+                <li><a href="dataset.html" data-lang-key="nav_dataset">Dataset</a></li>
+                <li><a href="story_detail.html" class="active" data-lang-key="nav_explorer">Result Explorer</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <button id="lang-en-btn">English</button>
+                <button id="lang-zh-btn">中文</button>
+            </div>
+        </nav>
+        <h1 data-lang-key="story_detail_title">Result Explorer: Story [Story ID]</h1>
+    </header>
+
+    <main>
+        <section id="input-info" class="input-section">
+            <div>
+                <h3 data-lang-key="input_script">Input Script</h3>
+                <pre id="script-display"><code>[Placeholder: Script for the current shot will be loaded here by JS]</code></pre>
+                <p><strong id="shot-indicator-text" data-lang-key="shot_current_of_total">Shot [1] of [Total Shots]</strong></p>
+            </div>
+            <div>
+                <h3 data-lang-key="character_ref">Character Reference</h3>
+                <div class="character-refs" id="character-reference-area">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Controls -->
+         <section class="global-controls">
+             <button id="prev-shot-btn" onclick="changeShot(-1)" data-lang-key="prev_shot">Previous Shot</button>
+             <div class="carousel-timer">
+                 <div class="carousel-progress" id="carousel-progress-bar"></div>
+             </div>
+             <button id="next-shot-btn" onclick="changeShot(1)" data-lang-key="next_shot">Next Shot</button>
+         </section>
+
+         <!-- Model Selection -->
+         <section id="model-selection-section">
+            <h3 data-lang-key="select_models">Compare Models:</h3>
+             <div class="model-selector" id="model-selector-checkboxes">
+                 <label><input type="checkbox" value="storygen-v1" checked onchange="toggleModelDisplay(this)"> StoryGen-V1</label>
+                 <label><input type="checkbox" value="consistent-story" checked onchange="toggleModelDisplay(this)"> ConsistentStory</label>
+                 <label><input type="checkbox" value="diffusion-adapter" checked onchange="toggleModelDisplay(this)"> DiffusionAdapter</label>
+                 <!-- Add more models dynamically if needed -->
+             </div>
+         </section>
+
+        <!-- Vertically Stacked Model Sequences -->
+        <section id="model-results-area">
+            <!-- JS will populate this area -->
+            <!-- Example structure for one model (repeated by JS) -->
+            <div class="model-sequence-container" data-model-id="storygen-v1">
+                <h4>StoryGen-V1</h4>
+                <div class="image-sequence-scroll-container">
+                    <!-- Images for all shots of this model -->
+                    <img src="img/placeholder.png" alt="Shot 1" data-shot-index="0" class="sequence-image focused">
+                    <img src="img/placeholder.png" alt="Shot 2" data-shot-index="1" class="sequence-image">
+                    <img src="img/placeholder.png" alt="Shot 3" data-shot-index="2" class="sequence-image">
+                    <!-- ... more images -->
+                </div>
+            </div>
+            <div class="model-sequence-container" data-model-id="consistent-story">
+                 <h4>ConsistentStory</h4>
+                 <div class="image-sequence-scroll-container">
+                     <img src="img/placeholder.png" alt="Shot 1" data-shot-index="0" class="sequence-image focused">
+                     <img src="img/placeholder.png" alt="Shot 2" data-shot-index="1" class="sequence-image">
+                     <img src="img/placeholder.png" alt="Shot 3" data-shot-index="2" class="sequence-image">
+                 </div>
+            </div>
+             <div class="model-sequence-container" data-model-id="diffusion-adapter">
+                  <h4>DiffusionAdapter</h4>
+                  <div class="image-sequence-scroll-container">
+                      <img src="img/placeholder.png" alt="Shot 1" data-shot-index="0" class="sequence-image focused">
+                      <img src="img/placeholder.png" alt="Shot 2" data-shot-index="1" class="sequence-image">
+                      <img src="img/placeholder.png" alt="Shot 3" data-shot-index="2" class="sequence-image">
+                  </div>
+            </div>
+            <!-- End Example Structure -->
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-lang-key="footer_text">Storytelling Benchmark © 2025</p>
+    </footer>
+
+    <script src="data/placeholder_data.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Updated JS below -->
+
+    <script>
+        // --- Result Explorer Specific JS ---
+
+        // Placeholder data (Same as before, ensure it has image paths per model/shot)
+        const storyData = {
+            storyId: "WildStory_en_01",
+            shots: [
+                { shot_id: "00", index: 1, script: "A little brown rabbit hops through a sunny meadow.", characters: ["Litte Brown Rabbit"], metrics: { "storygen-v1": {image: "img/placeholder_s1_m1_0.png"}, "consistent-story": {image: "img/placeholder_s1_m2_0.png"}, "diffusion-adapter": {image: "img/placeholder_s1_m3_0.png"} } },
+                { shot_id: "01", index: 2, script: "The rabbit meets a wise old owl perched on a branch.", characters: ["Litte Brown Rabbit", "Wise Old Owl"], metrics: { "storygen-v1": {image: "img/placeholder_s1_m1_1.png"}, "consistent-story": {image: "img/placeholder_s1_m2_1.png"}, "diffusion-adapter": {image: "img/placeholder_s1_m3_1.png"} } },
+                { shot_id: "02", index: 3, script: "The owl gives the rabbit some advice.", characters: ["Wise Old Owl"], metrics: { "storygen-v1": {image: "img/placeholder_s1_m1_2.png"}, "consistent-story": {image: "img/placeholder_s1_m2_2.png"}, "diffusion-adapter": {image: "img/placeholder_s1_m3_2.png"} } }
+            ],
+             characters: {
+                 "Litte Brown Rabbit": { name: "Little Brown Rabbit", refImages: ["img/placeholder_char1_ref1.png", "img/placeholder_char1_ref2.png"] },
+                 "Wise Old Owl": { name: "Wise Old Owl", refImages: ["img/placeholder_char2_ref1.png"] }
+            }
+        };
+
+        let currentShotIndex = 0;
+        const totalShots = storyData.shots.length;
+        let autoPlayTimer = null;
+        const autoPlayInterval = 5000; // 5 seconds
+
+        // --- DOM References ---
+        const scriptDisplay = document.getElementById('script-display').querySelector('code');
+        const shotIndicatorText = document.getElementById('shot-indicator-text');
+        const progressBar = document.getElementById('carousel-progress-bar');
+        const characterReferenceArea = document.getElementById('character-reference-area');
+        const modelResultsArea = document.getElementById('model-results-area');
+        const modelCheckboxesContainer = document.getElementById('model-selector-checkboxes');
+
+        // --- Core Update Function ---
+        function updateExplorerView(shotIndex) {
+            if (!storyData || !storyData.shots || storyData.shots.length === 0) return;
+            currentShotIndex = shotIndex;
+            const shot = storyData.shots[currentShotIndex];
+
+            // 1. Update Script Display
+            scriptDisplay.textContent = shot.script || "[Script not available]";
+
+            // 2. Update Shot Indicator Text
+            const indicatorTextKey = 'shot_current_of_total';
+            let indicatorText = translations[document.documentElement.lang]?.[indicatorTextKey] || translations.en[indicatorTextKey];
+            indicatorText = indicatorText.replace('[Current Shot]', shot.index).replace('[Total Shots]', totalShots);
+            shotIndicatorText.textContent = indicatorText; // Updated element reference
+
+            // 3. Update Character Reference Highlighting
+            characterReferenceArea.querySelectorAll('img').forEach(img => img.classList.remove('relevant-char'));
+            if (shot.characters && shot.characters.length > 0) {
+                shot.characters.forEach(charKey => {
+                    characterReferenceArea.querySelectorAll(`img[data-char-key="${charKey}"]`).forEach(img => {
+                        img.classList.add('relevant-char');
+                    });
+                });
+            }
+
+            // 4. Update Focus in All Visible Model Sequences
+            modelResultsArea.querySelectorAll('.model-sequence-container').forEach(container => {
+                if (container.style.display !== 'none') { // Only update visible models
+                    container.querySelectorAll('.sequence-image').forEach(img => {
+                        if (parseInt(img.dataset.shotIndex) === currentShotIndex) {
+                            img.classList.add('focused');
+                            // Optional: Scroll the container to bring the focused image into view
+                            img.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        } else {
+                            img.classList.remove('focused');
+                        }
+                    });
+                }
+            });
+
+            // 5. Update Progress Bar & Reset Timer
+             resetAutoPlayTimer(); // Reset timer whenever view updates
+        }
+
+        // --- Event Handlers ---
+        function changeShot(direction) {
+            let newIndex = currentShotIndex + direction;
+            if (newIndex < 0) {
+                newIndex = totalShots - 1;
+            } else if (newIndex >= totalShots) {
+                newIndex = 0;
+            }
+            updateExplorerView(newIndex);
+        }
+
+         function handleImageClick(event) {
+             if (event.target.classList.contains('sequence-image')) {
+                 const clickedShotIndex = parseInt(event.target.dataset.shotIndex);
+                 if (!isNaN(clickedShotIndex)) {
+                     updateExplorerView(clickedShotIndex);
+                 }
+             }
+         }
+
+        function toggleModelDisplay(checkbox) {
+            const modelId = checkbox.value;
+            const container = modelResultsArea.querySelector(`.model-sequence-container[data-model-id="${modelId}"]`);
+            if (container) {
+                container.style.display = checkbox.checked ? 'block' : 'none';
+                 // Ensure focus is correct if a model is toggled back on
+                 if (checkbox.checked) {
+                     updateExplorerView(currentShotIndex);
+                 }
+            }
+        }
+
+         // --- Autoplay Timer & Progress --- (User enabled this part)
+         let progressInterval = null;
+         function startProgressBar() {
+             let progress = 0;
+             clearInterval(progressInterval);
+             progressBar.style.width = '0%'; // Reset visually
+
+             progressInterval = setInterval(() => {
+                 progress += 100 / (autoPlayInterval / 100);
+                 if (progress <= 100) {
+                     progressBar.style.width = progress + '%';
+                 } else {
+                     // Timer elapsed, move to next shot if autoplay is intended
+                     clearInterval(progressInterval);
+                     // changeShot(1); // Uncomment this line to enable auto-advance
+                 }
+             }, 100);
+         }
+
+         function resetAutoPlayTimer() {
+             clearTimeout(autoPlayTimer);
+             clearInterval(progressInterval); // Stop current progress animation
+             startProgressBar(); // Start new progress animation
+             autoPlayTimer = setTimeout(() => {
+                  // Action after interval - e.g., advance shot
+                   changeShot(1); // Autoplay IS enabled by default now
+             }, autoPlayInterval);
+         }
+
+        // --- Initial Load ---
+        function initializeExplorer() {
+             // 1. Populate Character References
+             characterReferenceArea.innerHTML = '';
+             Object.entries(storyData.characters).forEach(([key, char]) => {
+                 const charDiv = document.createElement('div');
+                 charDiv.setAttribute('data-char-key', key);
+                 charDiv.innerHTML = `<strong>${char.name}:</strong>`;
+                 char.refImages.forEach(imgSrc => {
+                     const img = document.createElement('img');
+                     img.src = imgSrc;
+                     img.alt = `${char.name} Reference`;
+                     img.setAttribute('data-char-key', key);
+                     charDiv.appendChild(img);
+                 });
+                 characterReferenceArea.appendChild(charDiv);
+             });
+
+             // 2. Populate Model Sequences
+             modelResultsArea.innerHTML = ''; // Clear static placeholders
+             const models = Object.keys(storyData.shots[0]?.metrics || {}); // Get models from first shot
+
+              models.forEach(modelId => {
+                 const modelContainer = document.createElement('div');
+                 modelContainer.classList.add('model-sequence-container');
+                 modelContainer.setAttribute('data-model-id', modelId);
+
+                 const title = document.createElement('h4');
+                 // Attempt to get translated model name, fallback to ID
+                 title.textContent = translations[document.documentElement.lang]?.[modelId] || modelId;
+                 modelContainer.appendChild(title);
+
+                 const scrollContainer = document.createElement('div');
+                 scrollContainer.classList.add('image-sequence-scroll-container');
+
+                 storyData.shots.forEach((shot, index) => {
+                     const img = document.createElement('img');
+                     img.src = shot.metrics[modelId]?.image || 'img/placeholder.png';
+                     img.alt = `Model ${modelId} - Shot ${shot.index}`;
+                     img.classList.add('sequence-image');
+                     img.setAttribute('data-shot-index', index);
+                     // Add click listener to each image
+                     img.addEventListener('click', handleImageClick);
+                     scrollContainer.appendChild(img);
+                 });
+
+                 modelContainer.appendChild(scrollContainer);
+                 modelResultsArea.appendChild(modelContainer);
+
+                 // Check corresponding checkbox state for initial visibility
+                 const checkbox = modelCheckboxesContainer.querySelector(`input[value="${modelId}"]`);
+                 modelContainer.style.display = checkbox?.checked ? 'block' : 'none';
+             });
+
+             // 3. Initial View Update
+             if (totalShots > 0) {
+                 updateExplorerView(0);
+             } else {
+                 modelResultsArea.innerHTML = '<p>No shots available for this story.</p>';
+             }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeExplorer);
+
+    </script>
+</body>
+</html> 

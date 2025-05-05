@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Detail - Storytelling Benchmark</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html" data-lang-key="nav_overview">Overview</a></li>
+                <li><a href="metrics.html" data-lang-key="nav_metrics">Metrics Definition</a></li>
+                <li><a href="dataset.html" data-lang-key="nav_dataset">Dataset</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <button onclick="changeLanguage('en')">English</button>
+                <button onclick="changeLanguage('zh')">中文</button>
+            </div>
+        </nav>
+        <h1 data-lang-key="model_detail_title">Model Details: [Model Name]</h1>
+    </header>
+
+    <main>
+        <section id="model-info">
+            <h2 data-lang-key="model_detail_title">Model Details: [Model Name]</h2>
+            <p><i>[Placeholder for model description, version, key config etc.]</i></p>
+        </section>
+
+        <section id="overall-stats">
+            <h2 data-lang-key="overall_stats">Overall Statistics</h2>
+            <!-- Placeholder for overall scores, maybe charts later -->
+            <ul>
+                <li><strong data-lang-key="table_cref">Avg. CRef</strong>: [Score CRef]</li>
+                <li><strong data-lang-key="table_sref">Avg. SRef</strong>: [Score SRef]</li>
+                <li><strong data-lang-key="table_prompt">Avg. Prompt Adherence</strong>: [Score Prompt]</li>
+                <li><strong data-lang-key="table_quality">Avg. Quality</strong>: [Score Quality]</li>
+                <li><strong data-lang-key="table_overall">Overall Score</strong>: [Score Overall]</li>
+            </ul>
+        </section>
+
+        <section id="story-list">
+            <h2 data-lang-key="stories_evaluated">Stories Evaluated</h2>
+            <!-- Placeholder for table/list of stories evaluated by this model -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Story ID</th>
+                        <th data-lang-key="table_cref">CRef</th>
+                        <th data-lang-key="table_sref">SRef</th>
+                        <th data-lang-key="table_prompt">Prompt Adh.</th>
+                         <th data-lang-key="table_quality">Quality</th>
+                        <th data-lang-key="table_details">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="story_detail.html?model=[Model Name]&story=01">WildStory_en_01</a></td>
+                        <td>[Score]</td>
+                        <td>[Score]</td>
+                        <td>[Score]</td>
+                        <td>[Score]</td>
+                        <td><a href="story_detail.html?model=[Model Name]&story=01" data-lang-key="view_details">View Details</a></td>
+                    </tr>
+                    <tr>
+                         <td><a href="story_detail.html?model=[Model Name]&story=02">WildStory_en_02</a></td>
+                        <td>[Score]</td>
+                        <td>[Score]</td>
+                        <td>[Score]</td>
+                         <td>[Score]</td>
+                        <td><a href="story_detail.html?model=[Model Name]&story=02" data-lang-key="view_details">View Details</a></td>
+                    </tr>
+                     <!-- Add more placeholder stories -->
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-lang-key="footer_text">Storytelling Benchmark © 2025</p>
+    </footer>
+
+    <script src="data/placeholder_data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
