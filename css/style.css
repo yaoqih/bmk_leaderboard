@@ -239,8 +239,8 @@ footer {
      min-width: 120px; /* Align names */
 }
 .character-refs img {
-    max-width: 70px; /* Slightly smaller refs */
-    height: 70px;
+    max-width: 140px; /* Slightly smaller refs */
+    height: 140px;
     object-fit: cover;
     margin: 2px 5px;
     border: 2px solid #ccc;
