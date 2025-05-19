@@ -1,12 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from "@astrojs/tailwind"; // Import the official Astro Tailwind integration
 
 // https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()]
-  },
-  base: '/bmk_leaderboard/', // 仓库名
+  integrations: [
+    tailwind()
+  ], 
+  // vite: { // Remove direct Vite plugin for Tailwind
+  //   plugins: [tailwindcss()] 
+  // },
+  base: '/bmk_leaderboard/', 
 });

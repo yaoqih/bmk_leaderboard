@@ -26,13 +26,13 @@ const {
     {/* We can still have a fallback here or let the Header handle it exclusively */}
     <title>{title || 'Storytelling Benchmark'}</title> 
 </head>
-<body class="bg-white text-gray-800 font-sans flex flex-col min-h-screen">
+<body class="bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 font-sans flex flex-col min-h-screen transition-colors duration-300 ease-in-out">
     <Header title={title} activeNav={activeNav} />
     <main class="flex-grow">
         <slot /> {/* Page content will be injected here */}
     </main>
     <Footer />
-    <script src="/js/main.js" type="module" defer></script> 
+    <script src="/public/js/main.js" type="module" defer></script> 
 </body>
 </html>
 

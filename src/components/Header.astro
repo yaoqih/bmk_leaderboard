@@ -19,36 +19,149 @@ const navItems = [
     { href: `${base}/story_detail`, key: "nav_explorer", text: "Result Explorer", id: "story_detail" },
 ];
 ---
-<header class="bg-gray-100 py-4 shadow-md">
-    <nav class="container mx-auto px-4 flex justify-between items-center">
-        <ul class="flex space-x-4">
+{/* Always use dark background for header */}
+<header class="bg-slate-900 py-4 shadow-md  border-b border-gray-200 dark:border-slate-700">
+    <nav class="container mx-auto px-4 flex justify-between items-center ">
+        <ul class="flex space-x-1 md:space-x-2">
             {navItems.map(item => (
                 <li>
                     <a 
                         href={item.href} 
                         class:list={[
-                            "hover:text-blue-800",
-                            item.id === activeNav ? "text-blue-600 font-semibold" : "text-gray-600"
+                            "px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out",
+                            // Adjust active/inactive link colors for a persistent dark header
+                            item.id === activeNav 
+                                ? "bg-sky-700 text-sky-100" // Active link on dark header
+                                : "text-slate-300 hover:bg-slate-800 hover:text-slate-100" // Inactive link on dark header
                         ]}
                         data-lang-key={item.key}
                     >
-                        {item.text} {/* Default text, will be replaced by lang switch */}
+                        {item.text} 
                     </a>
                 </li>
             ))}
         </ul>
-        <div class="lang-switcher">
-            <button id="lang-en-btn" class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">English</button>
-            <button id="lang-zh-btn" class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-200 ml-2 focus:outline-none focus:ring-2 focus:ring-blue-500">中文</button>
+        <div class="flex items-center space-x-3">
+            <div class="lang-switcher flex items-center">
+                 {/* Language buttons on dark header - ensure good contrast */}
+                <button id="lang-en-btn" aria-label="Switch to English" class="lang-btn px-3 py-1.5 border border-slate-700 rounded-md text-xs font-medium focus:outline-none focus:ring-2 focus:ring-sky-400 transition-all duration-150 ease-in-out text-slate-300 hover:bg-slate-700">
+                    EN
+                </button>
+                <button id="lang-zh-btn" aria-label="切换到中文" class="lang-btn px-3 py-1.5 border border-slate-700 rounded-md text-xs font-medium ml-2 focus:outline-none focus:ring-2 focus:ring-sky-400 transition-all duration-150 ease-in-out text-slate-300 hover:bg-slate-700">
+                    ZH
+                </button>
+            </div>
+            {/* Theme toggle button appearance on dark header */}
+            <button id="theme-toggle" aria-label="Toggle theme" class="p-2 rounded-full hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400 transition-colors duration-150 ease-in-out">
+                <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden h-5 w-5 text-slate-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
         </div>
     </nav>
-    <div class="container mx-auto px-4 mt-4">
-        <h1 class="text-3xl font-bold text-gray-700" data-lang-key="overview_title">{title}</h1>
+    <div class="container mx-auto px-4 mt-6 pb-2 ">
+        {/* Page title on dark header */}
+        <h1 id="page-main-title" class="text-3xl font-bold text-slate-100 transition-colors duration-300 ease-in-out" data-lang-key="overview_title">{title}</h1>
     </div>
 </header>
 
 <script>
-    // setActiveNav 和语言切换按钮的逻辑将从 main.js 移到这里或全局脚本中
-    // 为了简单起见，暂时保留 main.js 的全局 setActiveNav 和语言切换逻辑
-    // 如果 main.js 被拆分，这些按钮的事件监听器需要在这里重新建立或通过模块导入
+// Function to update language button styles for a persistent dark header
+function updateLangButtonStyles(currentLang: string) {
+    const enBtn = document.getElementById('lang-en-btn');
+    const zhBtn = document.getElementById('lang-zh-btn');
+
+    if (!enBtn || !zhBtn) return;
+
+    // Base styles for buttons on dark header
+    const baseClasses = ['text-slate-300', 'hover:bg-slate-700', 'border-slate-700'];
+    const activeClasses = ['bg-sky-600', 'text-white', 'border-sky-500']; // Active language button on dark header
+
+    enBtn.classList.remove(...activeClasses, 'bg-sky-500', 'dark:bg-sky-600', 'dark:text-white'); // Clean up old classes
+    zhBtn.classList.remove(...activeClasses, 'bg-sky-500', 'dark:bg-sky-600', 'dark:text-white'); // Clean up old classes
+    enBtn.classList.add(...baseClasses);
+    zhBtn.classList.add(...baseClasses);
+
+    if (currentLang === 'en') {
+        enBtn.classList.add(...activeClasses);
+        enBtn.classList.remove(...baseClasses.filter(c => !activeClasses.includes(c))); // remove base if active overrides
+    } else if (currentLang === 'zh') {
+        zhBtn.classList.add(...activeClasses);
+        zhBtn.classList.remove(...baseClasses.filter(c => !activeClasses.includes(c))); // remove base if active overrides
+    }
+}
+
+// Theme toggle logic (largely unchanged, but icons are always on dark background)
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+function setTheme(isDark: boolean) {
+    console.log('setTheme called with:', isDark);
+    if (isDark) {
+        document.documentElement.classList.add('dark');
+        if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+        if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+        localStorage.setItem('theme', 'dark');
+        console.log('Applied DARK theme. HTML class list:', document.documentElement.classList);
+    } else {
+        document.documentElement.classList.remove('dark');
+        if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+        if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+        localStorage.setItem('theme', 'light');
+        console.log('Applied LIGHT theme. HTML class list:', document.documentElement.classList);
+    }
+}
+
+if (localStorage.getItem('theme') === 'dark' || 
+    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    setTheme(true);
+} else {
+    setTheme(false);
+}
+
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        const currentlyDark = document.documentElement.classList.contains('dark');
+        console.log('Theme toggle clicked. Currently dark:', currentlyDark);
+        setTheme(!currentlyDark);
+    });
+}
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!('theme' in localStorage)) { 
+        setTheme(e.matches);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = document.documentElement.lang || 'en';
+    updateLangButtonStyles(currentLang);
+});
+
+const enBtn = document.getElementById('lang-en-btn');
+const zhBtn = document.getElementById('lang-zh-btn');
+
+if (enBtn && zhBtn) {
+    enBtn.addEventListener('click', () => {
+        if (typeof (window as any).changeLanguage === 'function') {
+            (window as any).changeLanguage('en');
+        }
+        updateLangButtonStyles('en'); 
+    });
+
+    zhBtn.addEventListener('click', () => {
+        if (typeof (window as any).changeLanguage === 'function') {
+            (window as any).changeLanguage('zh');
+        }
+        updateLangButtonStyles('zh');
+    });
+}
+
+document.addEventListener('languageChanged', (event) => {
+    const lang = (event as CustomEvent<{ lang: string }>).detail.lang;
+    if (lang) {
+        updateLangButtonStyles(lang);
+    }
+});
+
 </script> 
