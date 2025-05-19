@@ -32,81 +32,81 @@ const baseUrlForClient = import.meta.env.BASE_URL;
     <section id="shot-details-card" class="mb-8 bg-white dark:bg-slate-800 shadow-xl rounded-2xl p-6 border border-gray-200 dark:border-slate-700 space-y-6">
       <!-- Input Information (Script and Character Ref) -->
       <div class="input-info-container grid md:grid-cols-2 gap-x-8 gap-y-6">
-        <!-- Input Script Card -->
+      <!-- Input Script Card -->
         <div class="bg-white dark:bg-slate-700 shadow-xl rounded-2xl p-6 border border-gray-100 dark:border-slate-650 hover:shadow-sky-100/50 dark:hover:shadow-sky-800/50 transition-all duration-300 ease-in-out">
           <h3 class="text-2xl font-semibold text-sky-700 dark:text-sky-400 mb-6" data-lang-key="input_script">Input Script</h3>
-          <div id="script-details-area" class="space-y-4">
+        <div id="script-details-area" class="space-y-4">
             <div class="p-4 bg-sky-50/70 dark:bg-slate-700 dark:border-sky-700/60 rounded-xl border border-sky-200/80 transition-all hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600">
               <h4 class="font-semibold text-sky-600 dark:text-sky-300 text-base mb-2" data-lang-key="script_plot">Plot Correspondence</h4>
               <p id="script-plot-display" class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed min-h-[3em]">[Select a story to load script]</p>
-            </div>
+          </div>
             <div class="p-4 bg-sky-50/70 dark:bg-slate-700 dark:border-sky-700/60 rounded-xl border border-sky-200/80 transition-all hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600">
               <h4 class="font-semibold text-sky-600 dark:text-sky-300 text-base mb-2" data-lang-key="script_setting">Setting Description</h4>
               <p id="script-setting-display" class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed min-h-[3em]">-</p>
-            </div>
+          </div>
             <div class="p-4 bg-sky-50/70 dark:bg-slate-700 dark:border-sky-700/60 rounded-xl border border-sky-200/80 transition-all hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600">
               <h4 class="font-semibold text-sky-600 dark:text-sky-300 text-base mb-2" data-lang-key="script_perspective">Shot Perspective Design</h4>
               <p id="script-perspective-display" class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed min-h-[3em]">-</p>
-            </div>
+          </div>
             <div class="p-4 bg-sky-50/70 dark:bg-slate-700 dark:border-sky-700/60 rounded-xl border border-sky-200/80 transition-all hover:shadow-md hover:border-sky-300 dark:hover:border-sky-600">
               <h4 class="font-semibold text-sky-600 dark:text-sky-300 text-base mb-2" data-lang-key="script_static_desc">Static Shot Description</h4>
               <p id="script-static-desc-display" class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed min-h-[3em]">-</p>
-            </div>
           </div>
-          <p class="mt-6 text-right">
-              <strong id="shot-indicator-text" data-lang-key="shot_current_of_total" class="px-4 py-2 bg-sky-600 dark:bg-sky-600 text-white text-xs font-bold rounded-full shadow-md hover:bg-sky-700 dark:hover:bg-sky-500 transition-colors">Shot [?] of [?]</strong>
-          </p>
         </div>
-        <!-- Character Reference Card -->
+        <p class="mt-6 text-right">
+              <strong id="shot-indicator-text" data-lang-key="shot_current_of_total" class="px-4 py-2 bg-sky-600 dark:bg-sky-600 text-white text-xs font-bold rounded-full shadow-md hover:bg-sky-700 dark:hover:bg-sky-500 transition-colors">Shot [?] of [?]</strong>
+        </p>
+      </div>
+      <!-- Character Reference Card -->
         <div class="bg-white dark:bg-slate-700 shadow-xl rounded-2xl p-6 border border-gray-100 dark:border-slate-650 hover:shadow-purple-100/50 dark:hover:shadow-purple-800/50 transition-all duration-300 ease-in-out">
           <h3 class="text-2xl font-semibold text-purple-700 dark:text-purple-400 mb-6" data-lang-key="character_ref">Character Reference</h3>
-          <div class="character-refs space-y-5" id="character-reference-area">
-            <!-- JS will populate this -->
+        <div class="character-refs space-y-5" id="character-reference-area">
+          <!-- JS will populate this -->
             <p class="text-gray-500 dark:text-slate-300 p-4 bg-purple-50/70 dark:bg-purple-800/60 dark:border-purple-700/60 rounded-xl border border-purple-200/80">Select a story to load characters.</p>
-          </div>
         </div>
+      </div>
       </div>
 
       <!-- Global Controls (Shot Navigation) -->
       <div class="global-controls-container flex justify-between items-center gap-x-4 md:gap-x-6">
-        <button id="prev-shot-btn" data-lang-key="prev_shot" disabled 
+      <button id="prev-shot-btn" data-lang-key="prev_shot" disabled 
                 class="py-2.5 px-5 md:py-3 md:px-6 cursor-pointer bg-sky-600 hover:bg-sky-700 dark:bg-sky-700 dark:hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-500 focus:outline-none text-white border-none rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-sky-400/70 dark:disabled:bg-sky-800/70 disabled:shadow-none font-medium text-sm md:text-base">
-          Previous Shot
-        </button>
+        Previous Shot
+      </button>
         <div class="carousel-timer w-3/5 md:w-2/3 h-3.5 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden shadow-inner border border-slate-300/70 dark:border-slate-500/70">
           <div class="carousel-progress h-full bg-sky-500 dark:bg-sky-500 transition-all duration-100 ease-linear rounded-full" id="carousel-progress-bar" style="width: 0%;"></div>
-        </div>
-        <button id="next-shot-btn" data-lang-key="next_shot" disabled 
+      </div>
+      <button id="next-shot-btn" data-lang-key="next_shot" disabled 
                 class="py-2.5 px-5 md:py-3 md:px-6 cursor-pointer bg-sky-600 hover:bg-sky-700 dark:bg-sky-700 dark:hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-500 focus:outline-none text-white border-none rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-sky-400/70 dark:disabled:bg-sky-800/70 disabled:shadow-none font-medium text-sm md:text-base">
-          Next Shot
-        </button>
+        Next Shot
+      </button>
       </div>
     </section>
 
     <!-- Model Display Card -->
     <section id="model-display-card" class="mb-8 bg-white dark:bg-slate-800 shadow-xl rounded-2xl p-6 border border-gray-200 dark:border-slate-700 space-y-6">
-      <!-- Model Visibility Selector Section -->
+    <!-- Model Visibility Selector Section -->
       <section id="model-visibility-selector-section" class="p-4 flex items-center gap-x-4 bg-gradient-to-br from-slate-50 to-sky-50/30 dark:from-slate-700 dark:to-sky-800/30 shadow-xl rounded-2xl border border-gray-200 dark:border-slate-600">
-        <!-- JS will populate this -->
-      </section> 
-  
-      <!-- Vertically Stacked Model Sequences -->
-      <section id="model-results-area" class="space-y-8">
-        <!-- JS will populate this area based on selected story and models -->
+      <!-- JS will populate this -->
+    </section> 
+
+    <!-- Vertically Stacked Model Sequences -->
+    <section id="model-results-area" class="space-y-8">
+      <!-- JS will populate this area based on selected story and models -->
         <p class="text-gray-500 dark:text-slate-400 p-6 bg-white dark:bg-slate-750 shadow-lg rounded-lg">Select a story to view results.</p>
-        <!-- Example Structure (Generated by JS, Tailwind classes will be applied by JS) -->
-        
-        <!-- <div class="model-sequence-container" data-model-key="storygen">
-          <h4>StoryGen</h4>
-          <div class="model-config">
-            ...
-          </div>
-          <div class="image-sequence-scroll-container">
-            <p>Loading images...</p>
-          </div>
-        </div> -->
-       
-      </section>
+      <!-- Example Structure (Generated by JS, Tailwind classes will be applied by JS) -->
+      
+      <!-- <div class="model-sequence-container" data-model-key="storygen">
+        <h4>StoryGen</h4>
+        <div class="model-config">
+          ...
+        </div>
+        <div class="image-sequence-scroll-container">
+          <p>Loading images...</p>
+        </div>
+      </div> -->
+     
+    </section>
     </section>
 
   </div>
@@ -784,7 +784,7 @@ function updateFocusInContainer(container, shotIndex) {
     // Add back default non-active styling, active styling will override these if applicable
     img.classList.add('border-transparent', 'shadow-sm');
     positionActiveImage(img, false); // reset position for all first
-
+    
     if (isCurrentShot) {
       img.classList.add(
         'border-sky-600', 'dark:border-sky-400', 
