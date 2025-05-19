@@ -6,7 +6,9 @@ import tailwind from "@astrojs/tailwind"; // Import the official Astro Tailwind 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    tailwind() // Remove configFile option to allow auto-detection
+    tailwind({
+      configFile: 'tailwind.config.mjs', // Explicitly point to the config
+    })
   ], 
   // vite: { // Remove direct Vite plugin for Tailwind
   //   plugins: [tailwindcss()] 
