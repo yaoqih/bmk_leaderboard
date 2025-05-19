@@ -115,7 +115,8 @@ const initialTitleText = translations['en']?.[initialTitleLangKey]?.replace('[St
 // --- Result Explorer Specific JS ---
 
 // --- Configuration & State ---
-const DATA_BASE_PATH = '/public/data'; // Astro public directory mapping
+const astroBaseUrl = import.meta.env.BASE_URL.replace(/\/$/, ''); // Ensure no trailing slash for clean joining
+// const DATA_BASE_PATH = '/public/data'; // Astro public directory mapping - This line can be removed or commented out as direct paths will be constructed with astroBaseUrl
 let currentStoryData = null;
 let currentStoryId = null;
 let currentDataset = null;
@@ -167,7 +168,7 @@ async function fetchStoryData(storyId) {
     return null;
   }
   currentDataset = storyInfo.dataset_base;
-  const storyJsonPath = `${DATA_BASE_PATH}/datasets/${currentDataset}/${storyInfo.id}/story.json`;
+  const storyJsonPath = `${astroBaseUrl}/data/datasets/${currentDataset}/${storyInfo.id}/story.json`;
   console.log(`Fetching story data from: ${storyJsonPath}`);
   try {
     const response = await fetch(storyJsonPath);
@@ -247,10 +248,10 @@ function populateStorySelector() {
     card.onclick = () => loadStory(story.id);
 
     img.src = story.cover_image_path 
-        ? (story.cover_image_path.startsWith('/') ? story.cover_image_path : `/public/${story.cover_image_path}`) 
-        : '/img/placeholder_story_cover.png';
+        ? `${astroBaseUrl}/${story.cover_image_path.replace(/^\/?public\//, '').replace(/^\//, '')}` 
+        : `${astroBaseUrl}/img/placeholder_story_cover.png`;
     img.alt = story.name;
-    img.onerror = () => { img.src = '/img/placeholder_story_cover.png'; };
+    img.onerror = () => { img.src = `${astroBaseUrl}/img/placeholder_story_cover.png`; };
     img.loading = "lazy";
     
     const currentUiLang = document.documentElement.lang || 'en';
@@ -326,7 +327,7 @@ function updateCharacterReferences() {
     nameEl.textContent = charName;
     charDiv.appendChild(nameEl);
 
-    const imageBasePath = `${DATA_BASE_PATH}/datasets/${currentDataset}/${currentStoryId}/image/${charKey}/`;
+    const imageBasePath = `${astroBaseUrl}/data/datasets/${currentDataset}/${currentStoryId}/image/${charKey}/`;
 
     const imagesContainer = document.createElement('div');
     imagesContainer.className = 'flex flex-wrap gap-3 items-center';
@@ -713,7 +714,7 @@ function loadModelSequence(modelKey) {
   currentStoryData.Shots.forEach((shot, index) => {
     const img = document.createElement('img');
     const shotIndexStr = shot.index.toString().padStart(2, '0');
-    const imagePath = `${DATA_BASE_PATH}/outputs/${modelKey}/${selectedMode}/${fullDatasetName}/${currentStoryId}/${selectedTimestamp}/shot_${shotIndexStr}.png`;
+    const imagePath = `${astroBaseUrl}/outputs/${modelKey}/${selectedMode}/${fullDatasetName}/${currentStoryId}/${selectedTimestamp}/shot_${shotIndexStr}.png`;
 
     img.className = 'h-44 md:h-48 w-auto inline-block border-2 border-transparent cursor-pointer transition-all duration-300 rounded-md shadow-sm hover:shadow-md hover:scale-110 object-contain';
     img.src = imagePath;
@@ -725,7 +726,7 @@ function loadModelSequence(modelKey) {
     img.onerror = () => {
       console.warn("Error loading image:", imagePath);
       img.alt = `Error loading ${modelName} - Shot ${shot.index}`;
-      img.src = '/img/placeholder_error.png'; 
+      img.src = `${astroBaseUrl}/img/placeholder_error.png`; 
       img.classList.add('border-red-300', 'dark:border-red-400');
     };
     img.loading = "lazy";
@@ -1162,7 +1163,7 @@ async function initializeExplorer() {
   }
 
   try {
-    const response = await fetch(`${DATA_BASE_PATH}/detailed_manifest.json`);
+    const response = await fetch(`${astroBaseUrl}/data/detailed_manifest.json`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - Check if detailed_manifest.json exists.`);
     detailedManifest = await response.json();
     availableStories = detailedManifest.stories || [];
