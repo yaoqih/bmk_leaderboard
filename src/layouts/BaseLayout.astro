@@ -14,16 +14,16 @@ const {
     title, // This will be the specific page title from the page frontmatter
     activeNav 
 } = Astro.props;
-const base = import.meta.env.BASE_URL;
-const faviconPath = new URL('favicon.svg', base).pathname;
-const mainJsPath = new URL('js/main.js', base).pathname;
+// const base = import.meta.env.BASE_URL; // No longer strictly needed here for these paths
+// const faviconPath = new URL('favicon.svg', base).pathname; // Removed
+// const mainJsPath = new URL('js/main.js', base).pathname; // Removed
 ---
 <!DOCTYPE html>
 <html lang="en"> {/* The lang attribute will be dynamically set by main.js */}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href={faviconPath} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     {/* The document title is now primarily set by the Header component via its prop or default */}
     {/* We can still have a fallback here or let the Header handle it exclusively */}
@@ -35,7 +35,7 @@ const mainJsPath = new URL('js/main.js', base).pathname;
         <slot /> {/* Page content will be injected here */}
     </main>
     <Footer />
-    <script src={mainJsPath} type="module"></script> 
+    <script src="/js/main.js" type="module"></script> 
 </body>
 </html>
 
