@@ -1,8 +1,5 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind"; // Import the official Astro Tailwind integration
-
-// 导入 tailwindcss 作为 vite 插件使用
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
