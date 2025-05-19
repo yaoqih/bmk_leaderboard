@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Benchmark Metrics Definition"; // Will be replaced by translation
+const activeNav = "metrics";
+---
+<BaseLayout title={pageTitle} activeNav={activeNav}>
+    <main class="container mx-auto px-4 py-8">
+        <section id="metrics-definitions" class="space-y-8">
+
+            <div class="metric-section border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 class="text-xl font-semibold mb-2" data-lang-key="cref_title">1. Character Consistency (CRef)</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-3" data-lang-key="cref_desc">Evaluates if characters look consistent across image sequences.</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li>
+                        <strong data-lang-key="cref_sub_accs">aCCS (Avg. Char Similarity)</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_accs_desc">[EN Placeholder: Uses CLIP image features to calculate similarity across frames (Ref: Theatregen, story-adapter). Suitable for general characters.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_face">ArcFace / AdaFace</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_face_desc">[EN Placeholder: Specialized facial recognition models for realistic human characters.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_ccip">CCIP</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_ccip_desc">[EN Placeholder: Suitable for anime-style characters, requires single character per image detection.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_confusion">Multi-Person Confusion</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_confusion_desc">[EN Placeholder: Measures distinguishability in multi-character scenes.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_grounding">Grounding DINO + Similarity</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_grounding_desc">[EN Placeholder: Detects main subjects then calculates CLIP/FID/DreamSim similarity.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_dreamsim">DreamSim Similarity</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_dreamsim_desc">[EN Placeholder: Cross-modal fine-grained matching metric.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_vbench">VBench Character Tracking</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_vbench_desc">[EN Placeholder: Adapts video consistency metrics for image sequences.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_charf1">Char-F1 / Char-Acc</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_charf1_desc">[EN Placeholder: Uses pre-trained classifiers to identify characters and compare with Ground Truth.]</p>
+                    </li>
+                    <li>
+                        <strong data-lang-key="cref_sub_vlm">VLM Validation</strong>:
+                        <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" data-lang-key="cref_sub_vlm_desc">[EN Placeholder: Compares generated characters against human-annotated Ground Truth using VLMs.]</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="metric-section border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 class="text-xl font-semibold mb-2" data-lang-key="sref_title">2. Style Consistency (SRef)</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-3" data-lang-key="sref_desc">Evaluates if the artistic style is consistent.</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>CSD (CLIP Style Encoder Distance)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2" >[Placeholder description - Self & Cross Similarity]</p></li>
+                    <li><strong>VLM Score</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder description - Qwen/GPT-4o rating]</p></li>
+                    <li><strong>ArtFID</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder description - FID for artistic styles]</p></li>
+                    <li><strong>Frequency Analysis / VGG Distance</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder description - Advanced exploration]</p></li>
+                </ul>
+            </div>
+
+            <div class="metric-section border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 class="text-xl font-semibold mb-2" data-lang-key="prompt_title">3. Prompt Adherence</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-3" data-lang-key="prompt_desc">Evaluates how well the generated images follow the text prompt.</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Objective - Entity Presence (VLM)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Object existence, Color, Character count/desc, Behavior]</p></li>
+                    <li><strong>Objective - Camera/Shot Type (VLM?)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Long/Medium shot, High/Low angle]</p></li>
+                    <li><strong>Objective - Environment Consistency (VLM)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Scene attributes, Time, Location]</p></li>
+                    <li><strong>Subjective - Emotion / Atmosphere (VLM)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Matches prompt description]</p></li>
+                    <li><strong>Subjective - Action / Expression (Grounding DINO + VLM)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Verify segmented character state]</p></li>
+                </ul>
+            </div>
+
+            <div class="metric-section border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 class="text-xl font-semibold mb-2" data-lang-key="quality_title">4. Generation Quality</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-3" data-lang-key="quality_desc">Assesses the visual quality and aesthetics of the images.</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Aesthetic Score (aesthetic-predictor-v2-5)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder description]</p></li>
+                    <li><strong>FID</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - For realistic images]</p></li>
+                    <li><strong>PickScore</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - CLIP-based ranking]</p></li>
+                    <li><strong>Degradation Analysis</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Quality vs. sequence length]</p></li>
+                </ul>
+            </div>
+
+            <div class="metric-section border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 class="text-xl font-semibold mb-2" data-lang-key="diversity_title">5. Diversity</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-3" data-lang-key="diversity_desc">Measures the variety in generated outputs.</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Inception Score</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - For multiple results from single prompt]</p></li>
+                    <li><strong>CLIP Feature Variance</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Across sequence generations]</p></li>
+                </ul>
+            </div>
+
+            <div class="metric-section">
+                <h3 class="text-xl font-semibold mb-2" data-lang-key="human_eval_title">6. Human Evaluation</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-3" data-lang-key="human_eval_desc">Subjective ratings from human evaluators.</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Cinematography</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Shot language, composition]</p></li>
+                    <li><strong>Narrative Coherence</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Story flow via questionnaire]</p></li>
+                    <li><strong>Visual Coherence</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Visual continuity between images]</p></li>
+                    <li><strong>Layout (Comics)</strong>: <p class="italic text-gray-600 dark:text-gray-400 mt-0.5 mb-2">[Placeholder - Panel layout interest]</p></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</BaseLayout> 

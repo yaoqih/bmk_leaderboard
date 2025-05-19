@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Detailed Leaderboard"; // Translations will apply to this via data-lang-key in Header
+const currentNav = "leaderboard_detail";
+---
+<BaseLayout title={pageTitle} activeNav={currentNav}>
+    <div class="container mx-auto px-4 py-8">
+        <section id="detailed-leaderboard-section" class="p-6 bg-white shadow-lg rounded-lg">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4" data-lang-key="leaderboard_detail_results">Results</h2>
+            {/* <p data-lang-key="leaderboard_expand_hint">Click the '+' icon to view detailed sub-metric scores.</p> */}
+            <div class="overflow-x-auto">
+                <table id="detailed-leaderboard-table" class="min-w-full bg-white">
+                    <thead class="bg-gray-200 text-gray-600">
+                        <tr>
+                            <th class="py-3 px-4 text-left w-12 expand-col"></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="text" data-column-index="1" data-lang-key="table_model">Model <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="date" data-column-index="2" data-lang-key="table_timestamp">Timestamp <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left" data-sortable="text" data-column-index="3" data-lang-key="table_dataset">Dataset <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left" data-sortable="text" data-column-index="4" data-lang-key="table_mode">Mode <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="number" data-column-index="5" data-lang-key="table_cref">CRef <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="number" data-column-index="6" data-lang-key="table_sref">SRef <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="number" data-column-index="7" data-lang-key="table_prompt">Prompt Adh. <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="number" data-column-index="8" data-lang-key="table_quality">Quality <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left cursor-pointer hover:bg-gray-300" data-sortable="number" data-column-index="9" data-lang-key="table_overall">Overall <span class="sort-arrow"></span></th>
+                            <th class="py-3 px-4 text-left" data-lang-key="table_notes">Notes / Link</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        {/* Row 1 (Main) */}
+                        <tr class="main-row border-b hover:bg-gray-50" data-dataset="WildStory_en" data-mode="auto-regressive">
+                            <td class="py-3 px-4 expand-col"><span class="expand-icon cursor-pointer select-none">+</span></td>
+                            <td class="py-3 px-4" data-label="Model:"><a href="/model_detail?model=storygen-v1" class="text-blue-600 hover:underline">StoryGen-V1</a></td>
+                            <td class="py-3 px-4" data-label="Timestamp:"><span class="timestamp">2024-07-15 10:00</span></td>
+                            <td class="py-3 px-4" data-label="Dataset:">WildStory_en</td>
+                            <td class="py-3 px-4" data-label="Mode:">Auto-Regressive</td>
+                            <td class="py-3 px-4" data-label="CRef:"><span class="score py-1 px-2 rounded bg-blue-100 text-blue-700 text-sm">0.85</span></td>
+                            <td class="py-3 px-4" data-label="SRef:"><span class="score py-1 px-2 rounded bg-blue-100 text-blue-700 text-sm">0.78</span></td>
+                            <td class="py-3 px-4" data-label="Prompt Adh.:"><span class="score py-1 px-2 rounded bg-blue-100 text-blue-700 text-sm">0.90</span></td>
+                            <td class="py-3 px-4" data-label="Quality:"><span class="score py-1 px-2 rounded bg-gray-100 text-gray-700 text-sm">4.5</span></td>
+                            <td class="py-3 px-4" data-label="Overall:"><span class="score high py-1 px-2 rounded bg-green-100 text-green-700 font-semibold text-sm">8.2</span></td>
+                            <td class="py-3 px-4" data-label="Notes:">Excellent CRef. <a href="#" class="text-indigo-600 hover:underline">[Details]</a></td>
+                        </tr>
+                        {/* Row 1 (Details - Hidden) */}
+                        <tr class="details-row bg-gray-50" id="details-row-1" style="display: none;">
+                            <td colspan="11" class="p-4">
+                                <div class="details-content text-sm">
+                                    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                        <div>
+                                            <dt class="font-semibold text-gray-600" data-lang-key="cref_title">Character Consistency:</dt>
+                                            <dd class="ml-4">aCCS: <span class="score">0.90</span>, ArcFace/AdaFace: <span class="score">0.88</span> (Real), CCIP: <span class="score">N/A</span> (Anime), Grounding+Sim: <span class="score">0.85</span>, DreamSim: <span class="score">0.75</span>, VLM Verify: <span class="score">Pass</span></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="font-semibold text-gray-600" data-lang-key="sref_title">Style Consistency:</dt>
+                                            <dd class="ml-4">CSD (Self): <span class="score">0.82</span>, CSD (Cross): <span class="score">0.79</span>, VLM Score: <span class="score">4.2/5</span>, ArtFID: <span class="score">15.5</span></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="font-semibold text-gray-600" data-lang-key="prompt_title">Prompt Adherence:</dt>
+                                            <dd class="ml-4">Entity Presence: <span class="score">Yes</span>, Color Consist.: <span class="score">Yes</span>, Char. Attr.: <span class="score">Match</span>, Action/Behavior: <span class="score">Match</span>, Camera/Shot: <span class="score">Partial Match</span>, Environment: <span class="score">Match</span>, Emotion/Atmosphere: <span class="score">Good Match</span></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="font-semibold text-gray-600" data-lang-key="quality_title">Generation Quality:</dt>
+                                            <dd class="ml-4">Aesthetic Score: <span class="score">4.8/5</span>, FID: <span class="score">30.1</span> (Real), PickScore: <span class="score">0.70</span>, Degradation: <span class="score">Low</span></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="font-semibold text-gray-600" data-lang-key="diversity_title">Diversity:</dt>
+                                            <dd class="ml-4">Inception Score: <span class="score">[Score]</span>, CLIP Variance: <span class="score">[Score]</span></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="font-semibold text-gray-600" data-lang-key="human_eval_title">Human Evaluation:</dt>
+                                            <dd class="ml-4">Cinematography: <span class="score">4.0/5</span>, Narrative Coherence: <span class="score">4.5/5</span>, Visual Coherence: <span class="score">4.2/5</span>, Layout (Comics): <span class="score">N/A</span></dd>
+                                        </div>
+                                    </dl>
+                                </div>
+                            </td>
+                        </tr>
+
+                        {/* Row 2 (Main) */}
+                        <tr class="main-row border-b hover:bg-gray-50" data-dataset="WildStory_ch" data-mode="auto-regressive">
+                            <td class="py-3 px-4 expand-col"><span class="expand-icon cursor-pointer select-none">+</span></td>
+                            <td class="py-3 px-4" data-label="Model:"><a href="/model_detail?model=storygen-v1" class="text-blue-600 hover:underline">StoryGen-V1</a></td>
+                            <td class="py-3 px-4" data-label="Timestamp:"><span class="timestamp">2024-07-15 11:30</span></td>
+                            <td class="py-3 px-4" data-label="Dataset:">WildStory_ch</td>
+                            <td class="py-3 px-4" data-label="Mode:">Auto-Regressive</td>
+                            <td class="py-3 px-4" data-label="CRef:"><span class="score py-1 px-2 rounded bg-blue-100 text-blue-700 text-sm">0.82</span></td>
+                            <td class="py-3 px-4" data-label="SRef:"><span class="score py-1 px-2 rounded bg-blue-100 text-blue-700 text-sm">0.75</span></td>
+                            <td class="py-3 px-4" data-label="Prompt Adh.:"><span class="score py-1 px-2 rounded bg-blue-100 text-blue-700 text-sm">0.88</span></td>
+                            <td class="py-3 px-4" data-label="Quality:"><span class="score py-1 px-2 rounded bg-gray-100 text-gray-700 text-sm">4.4</span></td>
+                            <td class="py-3 px-4" data-label="Overall:"><span class="score high py-1 px-2 rounded bg-green-100 text-green-700 font-semibold text-sm">8.0</span></td>
+                            <td class="py-3 px-4" data-label="Notes:"><a href="#" class="text-indigo-600 hover:underline">[Paper]</a></td>
+                        </tr>
+                        {/* Row 2 (Details - Hidden) */}
+                        <tr class="details-row bg-gray-50" id="details-row-2" style="display: none;">
+                            <td colspan="11" class="p-4">
+                                <div class="details-content text-sm">
+                                     <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                                         <dt class="font-semibold text-gray-600" data-lang-key="cref_title">Character Consistency:</dt>
+                                         <dd class="ml-4">aCCS: 0.85, ArcFace/AdaFace: 0.80, ... </dd>
+                                         <dt class="font-semibold text-gray-600" data-lang-key="sref_title">Style Consistency:</dt>
+                                         <dd class="ml-4">CSD (Self): 0.80, ...</dd>
+                                     </dl>
+                                 </div>
+                            </td>
+                        </tr>
+                         {/* Add more rows as per original HTML structure */}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</BaseLayout>
+
+<script>
+    let sortDirection = {}; // Stores { domColumnIndex: 'asc' | 'desc' }
+
+    function toggleDetails(rowId) {
+        const detailsRow = document.getElementById(rowId);
+        const mainRow = detailsRow?.previousElementSibling;
+        const icon = mainRow?.querySelector('.expand-icon');
+
+        if (detailsRow && icon) {
+            const isVisible = detailsRow.style.display !== 'none';
+            detailsRow.style.display = isVisible ? 'none' : 'table-row';
+            icon.textContent = isVisible ? '+' : '-';
+        }
+    }
+
+    function sortTable(columnIndex, type) {
+        const table = document.getElementById('detailed-leaderboard-table');
+        if (!table) return;
+        const tbody = table.querySelector('tbody');
+        
+        // Collect all main rows and their corresponding detail rows
+        const pairedRows = [];
+        let mainRows = Array.from(tbody.querySelectorAll('tr.main-row'));
+        mainRows.forEach(mainRow => {
+            let detailRow = mainRow.nextElementSibling;
+            if (detailRow && detailRow.classList.contains('details-row')) {
+                pairedRows.push({ main: mainRow, detail: detailRow });
+            } else {
+                pairedRows.push({ main: mainRow, detail: null }); // Should not happen with correct structure
+            }
+        });
+
+        const currentDirection = sortDirection[columnIndex] === 'asc' ? 'desc' : 'asc';
+        sortDirection = {}; // Reset sort directions for other columns
+        sortDirection[columnIndex] = currentDirection;
+
+        pairedRows.sort((a, b) => {
+            const cellA = a.main.cells[columnIndex];
+            const cellB = b.main.cells[columnIndex];
+            let valA = cellA?.textContent.trim();
+            let valB = cellB?.textContent.trim();
+
+            if (type === 'number') {
+                const scoreA = cellA?.querySelector('.score');
+                const scoreB = cellB?.querySelector('.score');
+                valA = parseFloat(scoreA ? scoreA.textContent : valA) || 0;
+                valB = parseFloat(scoreB ? scoreB.textContent : valB) || 0;
+            } else if (type === 'date') {
+                valA = new Date(valA).getTime() || 0;
+                valB = new Date(valB).getTime() || 0;
+            } else { // text
+                valA = valA?.toLowerCase() || '';
+                valB = valB?.toLowerCase() || '';
+            }
+
+            if (valA < valB) return currentDirection === 'asc' ? -1 : 1;
+            if (valA > valB) return currentDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        // Re-append sorted rows along with their detail rows
+        pairedRows.forEach(pair => {
+            tbody.appendChild(pair.main);
+            if (pair.detail) {
+                tbody.appendChild(pair.detail);
+            }
+        });
+
+        updateSortIndicators(table, columnIndex, currentDirection);
+    }
+
+    function updateSortIndicators(table, activeColumnIndex, direction) {
+        table.querySelectorAll('thead th[data-sortable]').forEach(th => {
+            const arrow = th.querySelector('.sort-arrow');
+            if (!arrow) return;
+            if (parseInt(th.dataset.columnIndex) === activeColumnIndex) {
+                arrow.textContent = direction === 'asc' ? ' ▲' : ' ▼';
+            } else {
+                arrow.textContent = '';
+            }
+        });
+    }
+
+    // Event listeners for table headers
+    document.addEventListener('DOMContentLoaded', () => {
+        const table = document.getElementById('detailed-leaderboard-table');
+        if (table) {
+            table.querySelectorAll('thead th[data-sortable]').forEach(th => {
+                th.addEventListener('click', () => {
+                    sortTable(parseInt(th.dataset.columnIndex), th.dataset.sortable);
+                });
+            });
+
+            // Attach event listeners for expand/collapse icons
+            // Use event delegation for dynamically added content if necessary, but for now direct binding
+            table.querySelectorAll('tbody .expand-icon').forEach((icon, index) => {
+                 // Assuming IDs are details-row-1, details-row-2 etc.
+                 // This might need adjustment if IDs are generated differently or more robustly.
+                 // For now, this relies on the row index matching the id number.
+                const detailRowId = `details-row-${index + 1}`;
+                icon.addEventListener('click', () => toggleDetails(detailRowId));
+            });
+        }
+    });
+
+</script> 

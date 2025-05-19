@@ -1,0 +1,53 @@
+---
+// src/components/Header.astro
+export interface Props {
+	title?: string; // 允许外部传入页面标题
+    activeNav?: string; // 用于高亮当前导航项，例如 'overview', 'leaderboard_detail'
+}
+
+const { 
+    title = 'Storytelling Benchmark Overview & Leaderboard', // 默认标题
+    activeNav
+} = Astro.props;
+
+const navItems = [
+    { href: "/", key: "nav_overview", text: "Overview", id: "overview" },
+    { href: "/leaderboard_detail", key: "nav_leaderboard_detail", text: "Detailed Leaderboard", id: "leaderboard_detail" },
+    { href: "/metrics", key: "nav_metrics", text: "Metrics Definition", id: "metrics" },
+    { href: "/dataset", key: "nav_dataset", text: "Dataset", id: "dataset" },
+    { href: "/story_detail", key: "nav_explorer", text: "Result Explorer", id: "story_detail" },
+];
+---
+<header class="bg-gray-100 py-4 shadow-md">
+    <nav class="container mx-auto px-4 flex justify-between items-center">
+        <ul class="flex space-x-4">
+            {navItems.map(item => (
+                <li>
+                    <a 
+                        href={item.href} 
+                        class:list={[
+                            "hover:text-blue-800",
+                            item.id === activeNav ? "text-blue-600 font-semibold" : "text-gray-600"
+                        ]}
+                        data-lang-key={item.key}
+                    >
+                        {item.text} {/* Default text, will be replaced by lang switch */}
+                    </a>
+                </li>
+            ))}
+        </ul>
+        <div class="lang-switcher">
+            <button id="lang-en-btn" class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">English</button>
+            <button id="lang-zh-btn" class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-200 ml-2 focus:outline-none focus:ring-2 focus:ring-blue-500">中文</button>
+        </div>
+    </nav>
+    <div class="container mx-auto px-4 mt-4">
+        <h1 class="text-3xl font-bold text-gray-700" data-lang-key="overview_title">{title}</h1>
+    </div>
+</header>
+
+<script>
+    // setActiveNav 和语言切换按钮的逻辑将从 main.js 移到这里或全局脚本中
+    // 为了简单起见，暂时保留 main.js 的全局 setActiveNav 和语言切换逻辑
+    // 如果 main.js 被拆分，这些按钮的事件监听器需要在这里重新建立或通过模块导入
+</script> 

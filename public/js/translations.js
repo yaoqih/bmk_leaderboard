@@ -1,5 +1,4 @@
-// Store language strings here
-const translations = {
+export const translations = {
     en: {
         site_title: "Storytelling Benchmark",
         nav_overview: "Overview",
@@ -39,12 +38,10 @@ const translations = {
         about_license_title: "License",
         about_license_text: "[Placeholder EN: The benchmark code and results are licensed under the [License Name, e.g., Apache 2.0] License. The dataset might have its own license.]",
         footer_text: "Storytelling Benchmark © 2025",
-        // --- Model Detail Page --- (Add keys as needed)
         model_detail_title: "Model Details: [Model Name]",
         overall_stats: "Overall Statistics",
         stories_evaluated: "Stories Evaluated",
         avg_score: "Average Score",
-        // --- Story Detail Page (Result Explorer) --- (Add keys as needed)
         story_detail_title: "Result Explorer: Story [Story ID]",
         input_script: "Input Script",
         character_ref: "Character Reference",
@@ -54,7 +51,6 @@ const translations = {
         shot_current_of_total: "Shot [Current Shot] of [Total Shots]",
         prev_shot: "Previous Shot",
         next_shot: "Next Shot",
-        // --- Metrics Page --- (Add keys as needed)
         metrics_title: "Benchmark Metrics Definition",
         cref_title: "Character Consistency",
         cref_desc: "Evaluates if characters look consistent across image sequences.",
@@ -86,7 +82,6 @@ const translations = {
         diversity_desc: "Measures the variety in generated outputs.",
         human_eval_title: "Human Evaluation",
         human_eval_desc: "Subjective ratings from human evaluators.",
-        // --- Dataset Page --- (Add keys as needed)
         dataset_title: "Benchmark Dataset Information",
         dataset_desc: "Details about the dataset used for evaluation.",
         dataset_source: "Source: [Dataset Source]",
@@ -131,12 +126,10 @@ const translations = {
         about_license_title: "许可证",
         about_license_text: "[中文占位符: Benchmark 代码和结果采用 [许可证名称，例如 Apache 2.0] 许可证。数据集可能有其自身的许可证。]",
         footer_text: "Storytelling Benchmark © 2025",
-        // --- Model Detail Page --- (Add keys as needed)
         model_detail_title: "模型详情: [Model Name]",
         overall_stats: "总体统计",
         stories_evaluated: "已评估故事",
         avg_score: "平均得分",
-        // --- Story Detail Page (Result Explorer) --- (Add keys as needed)
         story_detail_title: "结果浏览器: 故事 [Story ID]",
         input_script: "输入剧本",
         character_ref: "角色参考",
@@ -146,7 +139,6 @@ const translations = {
         shot_current_of_total: "镜头 [Current Shot] / [Total Shots]",
         prev_shot: "上一镜头",
         next_shot: "下一镜头",
-        // --- Metrics Page --- (Add keys as needed)
         metrics_title: "Benchmark 指标定义",
         cref_title: "角色一致性",
         cref_desc: "评估角色在图像序列中的外观是否一致。",
@@ -178,7 +170,6 @@ const translations = {
         diversity_desc: "衡量生成输出的多样性。",
         human_eval_title: "人工评估",
         human_eval_desc: "来自人类评估者的主观评分。",
-        // --- Dataset Page --- (Add keys as needed)
         dataset_title: "Benchmark 数据集信息",
         dataset_desc: "关于用于评估的数据集的详细信息。",
         dataset_source: "来源: [数据集来源]",

@@ -1,44 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dataset Information - Storytelling Benchmark</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        pre {
-            background-color: #eee;
-            padding: 15px;
-            border-radius: 4px;
-            overflow-x: auto; /* Handle long lines in code blocks */
-        }
-        .data-example img {
-             max-width: 150px;
-             margin: 5px;
-             vertical-align: middle;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active" data-lang-key="nav_overview">Overview</a></li>
-                <li><a href="leaderboard_detail.html" data-lang-key="nav_leaderboard_detail">Detailed Leaderboard</a></li>
-                <li><a href="metrics.html" data-lang-key="nav_metrics">Metrics Definition</a></li>
-                <li><a href="dataset.html" data-lang-key="nav_dataset">Dataset</a></li>
-                <li><a href="story_detail.html" data-lang-key="nav_explorer">Result Explorer</a></li>
-            </ul>
-            <div class="lang-switcher">
-                <button id="lang-en-btn">English</button>
-                <button id="lang-zh-btn">中文</button>
-            </div>
-        </nav>
-        <h1 data-lang-key="dataset_title">Benchmark Dataset Information</h1>
-    </header>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
-    <main>
-        <section id="dataset-description">
+const pageTitle = "Benchmark Dataset Information"; // Will be translated by Header
+const activeNav = "dataset";
+---
+<BaseLayout title={pageTitle} activeNav={activeNav}>
+    <main class="container mx-auto px-4 py-8 space-y-12">
+        <section id="dataset-description" class="prose dark:prose-invert max-w-none">
             <h2 data-lang-key="dataset_desc">Dataset Details</h2>
             <p data-lang-key="dataset_source">Source: WildStory (Versions: English, Chinese)</p>
             <p data-lang-key="dataset_stats">Statistics: [80] stories, Avg. [10-15] shots per story.</p>
@@ -52,10 +20,10 @@
             </ul>
         </section>
 
-        <section id="data-structure">
-            <h2>Data Structure (stories_data)</h2>
+        <section id="data-structure" class="prose dark:prose-invert max-w-none">
+            <h2 data-lang-key="datastructure_title">Data Structure (stories_data)</h2>
             <p>[Placeholder explanation of the main data structure used for stories and characters.]</p>
-            <pre><code>
+            <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded-md overflow-x-auto"><code>{`
 stories_data = {
     "story_id (e.g., 01)": {
         "type": "[e.g., WildStory_en]",
@@ -90,13 +58,13 @@ stories_data = {
     },
     // ... more stories
 }
-            </code></pre>
+            `}</code></pre>
         </section>
 
-        <section id="output-structure">
-             <h2>Output Structure (Benchmark Results)</h2>
+        <section id="output-structure" class="prose dark:prose-invert max-w-none">
+             <h2 data-lang-key="outputstructure_title">Output Structure (Benchmark Results)</h2>
              <p>[Placeholder explanation of how model outputs are stored.]</p>
-            <pre><code>
+            <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded-md overflow-x-auto"><code>{`
 dataset_processed:
     storygen:
         data_set(WildStory_en, WildStory_ch):
@@ -111,28 +79,19 @@ outputs:
                     time_stamp(20250430-022517):
                         shot_id.png (e.g., shot_01.png)
                         # Maybe evaluation results per shot/story here too?
-            </code></pre>
+            `}</code></pre>
         </section>
 
-        <section id="data-examples">
-            <h2>Data Examples</h2>
+        <section id="data-examples" class="prose dark:prose-invert max-w-none">
+            <h2 data-lang-key="dataexamples_title">Data Examples</h2>
             <div class="data-example">
                 <p><strong>Example Script (Story 01, Shot 00):</strong> [Placeholder script text...]</p>
                 <p><strong>Example Character (Little Brown Rabbit):</strong>
-                    <img src="img/placeholder.png" alt="Ref 1">
-                    <img src="img/placeholder.png" alt="Ref 2">
+                    <img src="/img/placeholder.png" alt="Ref 1" class="max-w-[150px] m-1 align-middle inline-block border border-gray-300 dark:border-gray-600">
+                    <img src="/img/placeholder.png" alt="Ref 2" class="max-w-[150px] m-1 align-middle inline-block border border-gray-300 dark:border-gray-600">
                 </p>
             </div>
-            <!-- Add more examples if needed -->
+            {/* <!-- Add more examples if needed --> */}
         </section>
-
     </main>
-
-    <footer>
-        <p data-lang-key="footer_text">Storytelling Benchmark © 2025</p>
-    </footer>
-
-    <script src="data/placeholder_data.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html> 
+</BaseLayout> 
