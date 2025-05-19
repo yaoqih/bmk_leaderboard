@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     tailwind({
       // Apply custom config path
-      configFile: 'tailwind.config.mjs' // Correct option to specify config file path
+      configFile: './tailwind.config.mjs' // Correct option to specify config file path
     })
   ], 
   // vite: { // Remove direct Vite plugin for Tailwind
