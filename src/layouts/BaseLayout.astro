@@ -14,16 +14,20 @@ const {
     title, // This will be the specific page title from the page frontmatter
     activeNav 
 } = Astro.props;
-// const base = import.meta.env.BASE_URL; // No longer strictly needed here for these paths
-// const faviconPath = new URL('favicon.svg', base).pathname; // Removed
-// const mainJsPath = new URL('js/main.js', base).pathname; // Removed
+
+const base = import.meta.env.BASE_URL; 
+// Ensure no double slashes if base ends with / and path starts with /
+// Though for public assets, paths like "/js/main.js" are usually resolved correctly by Astro by prepending base.
+// This explicit construction is a fallback if auto-resolution isn't working as expected in preview.
+const mainJsPathWithBase = `${base.replace(/\/$/, '')}/js/main.js`.replace(/\/\//g, '/'); 
+const faviconPathWithBase = `${base.replace(/\/$/, '')}/favicon.svg`.replace(/\/\//g, '/');
 ---
 <!DOCTYPE html>
 <html lang="en"> {/* The lang attribute will be dynamically set by main.js */}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={faviconPathWithBase} />
     <meta name="generator" content={Astro.generator} />
     {/* The document title is now primarily set by the Header component via its prop or default */}
     {/* We can still have a fallback here or let the Header handle it exclusively */}
@@ -35,7 +39,7 @@ const {
         <slot /> {/* Page content will be injected here */}
     </main>
     <Footer />
-    <script src="/js/main.js" type="module"></script> 
+    <script src={mainJsPathWithBase} type="module"></script> 
 </body>
 </html>
 
