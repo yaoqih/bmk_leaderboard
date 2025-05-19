@@ -12,8 +12,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   integrations: [
     tailwind({
-      // 使用绝对路径指向 Tailwind 配置文件
-      configFile: path.resolve(__dirname, 'tailwind.config.mjs'),
+      // 使用简单相对路径
+      configFile: './tailwind.config.mjs',
       // 由于您在 BaseLayout.astro 中手动包含了 @tailwind base/components/utilities,
       // 这里应设为 false
       applyBaseStyles: false,
