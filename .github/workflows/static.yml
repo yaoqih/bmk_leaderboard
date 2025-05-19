@@ -37,8 +37,19 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci
+
+      # --- 调试步骤 开始 ---
+      - name: Check tailwind.config.mjs existence and content
+        run: |
+          echo "Looking for tailwind.config.mjs in $(pwd)"
+          ls -la tailwind.config.mjs # 检查文件是否存在及其权限
+          echo "--- tailwind.config.mjs content START ---"
+          cat tailwind.config.mjs
+          echo "--- tailwind.config.mjs content END ---"
+      # --- 调试步骤 结束 ---
+
       - name: Build
-        run: npm run build
+        run: npm run build # 这里的输出包含那个关键警告
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
