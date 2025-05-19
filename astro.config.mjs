@@ -10,5 +10,6 @@ export default defineConfig({
   // vite: { // Remove direct Vite plugin for Tailwind
   //   plugins: [tailwindcss()] 
   // },
+  site: 'https://yaoqih.github.io',
   base: '/bmk_leaderboard/', 
 });

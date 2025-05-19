@@ -10,6 +10,7 @@ const initialTitleLangKey = "story_detail_title";
 // Assuming 'en' is a safe default if Astro cannot determine lang at build time for this.
 // The client-side JS will handle actual language-based title updates.
 const initialTitleText = translations['en']?.[initialTitleLangKey]?.replace('[Story ID]', '') || "Result Explorer";
+const baseUrlForClient = import.meta.env.BASE_URL;
 ---
 <BaseLayout title={initialTitleText} activeNav={currentNav}>
   <div class="container mx-auto px-4 py-8 bg-gray-50 dark:bg-slate-900">
@@ -111,11 +112,11 @@ const initialTitleText = translations['en']?.[initialTitleLangKey]?.replace('[St
   </div>
 </BaseLayout>
 
-<script define:vars={{ initialTranslations: translations }}>
+<script define:vars={{ initialTranslations: translations, clientSideBaseUrl: baseUrlForClient }}>
 // --- Result Explorer Specific JS ---
 
 // --- Configuration & State ---
-const astroBaseUrl = import.meta.env.BASE_URL.replace(/\/$/, ''); // Ensure no trailing slash for clean joining
+const astroBaseUrl = clientSideBaseUrl.replace(/\/$/, ''); // Ensure no trailing slash for clean joining
 // const DATA_BASE_PATH = '/public/data'; // Astro public directory mapping - This line can be removed or commented out as direct paths will be constructed with astroBaseUrl
 let currentStoryData = null;
 let currentStoryId = null;
