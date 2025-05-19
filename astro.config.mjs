@@ -7,5 +7,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  base: '/bmk_leaderboard/', // 仓库名
 });
