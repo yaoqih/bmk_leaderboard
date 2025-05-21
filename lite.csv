@@ -1,0 +1,20 @@
+Method	model	mode	角色一致性 (CRef)_rank	风格一致性 (SRef)_rank	Prompt遵循度_rank	生成质量_rank	多样性_rank	overall_rank	model_key
+bairimeng_ai	base	0.426	1.0	2.0	9.0	12.0	13.0	1.0	bairimeng_ai - base
+UNO (many2many version)	base	0.446	8.0	5.0	6.0	7.0	14.0	2.0	UNO (many2many version) - base
+GPT4o	base	0.487	3.0	3.0	1.0	13.0	18.0	3.0	GPT4o - base
+Storydiffusion	Text only	0.315	6.0	11.0	13.0	2.0	10.0	4.5	Storydiffusion - Text only
+base	base	0.736	9.0	1.0	14.0	18.0	1.0	4.5	base - base
+doubao	base	0.386	2.0	4.0	2.0	11.0	19.0	6.0	doubao - base
+Movieagent	SD-3 version	0.361	10.0	15.5	4.0	4.0	12.0	7.0	Movieagent - SD-3 version
+xunfeihuiying	base	0.342	14.0	7.0	11.5	6.0	7.0	8.0	xunfeihuiying - base
+Storyadapter	(Img ref) (scale0)	0.359	15.0	17.0	8.0	3.0	4.0	9.0	Storyadapter - (Img ref) (scale0)
+moki	base	0.229	4.0	8.5	19.0	8.0	8.0	10.0	moki - base
+Animdirector	base	0.321	6.0	13.0	5.0	10.0	16.0	11.0	Animdirector - base
+morphic_studio	base	0.59	11.0	6.0	10.0	14.0	11.0	12.0	morphic_studio - base
+shenbimaliang	base	0.292	12.0	14.0	7.0	5.0	17.0	13.0	shenbimaliang - base
+Storygen	(Mix)	0.315	13.0	11.0	15.5	17.0	2.0	14.0	Storygen - (Mix)
+MM-StoryAgent	base	0.28	6.0	8.5	15.5	16.0	9.0	15.0	MM-StoryAgent - base
+Theatergen	base	0.237	16.0	19.0	17.0	1.0	6.0	16.0	Theatergen - base
+Gemini	base	0.381	18.0	15.5	3.0	9.0	15.0	17.0	Gemini - base
+Vlogger	text only	0.257	17.0	18.0	11.5	15.0	3.0	18.0	Vlogger - text only
+Seedstory(AR) 	base	0.264	19.0	11.0	18.0	19.0	5.0	19.0	Seedstory(AR)  - base
