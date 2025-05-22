@@ -103,8 +103,8 @@ def generate_manifest(datasets_path: Path, outputs_path: Path, output_manifest_p
     print("Starting manifest generation...")
     manifest = {
         "stories": [],
-        "outputs": defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list)))))
-        # outputs[method][mode][dataset_base][lang][story_id] = [ts1, ts2,...]
+        "outputs": defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))))
+        # outputs[method][mode][dataset][language][story_id] = {ts1: [shots], ts2: [shots], ...}
     }
 
     # --- 1. Scan Datasets ---
@@ -151,56 +151,105 @@ def generate_manifest(datasets_path: Path, outputs_path: Path, output_manifest_p
     if not outputs_path.is_dir():
         print(f"Warning: Outputs path '{outputs_path}' not found. Manifest will not contain output info.", file=sys.stderr)
     else:
+        # 新的扫描结构:
+        # outputs/{method}/{mode}/{dataset}/{language}/{story}/{timestamp}/{shot}
         for method_dir in outputs_path.iterdir():
             if not method_dir.is_dir(): continue
             method = method_dir.name
             print(f"- Found Method: {method}")
-            for mode_dir in method_dir.iterdir():
+            
+            # 检查方法目录下是否有多个模式
+            has_multiple_modes = False
+            mode_dirs = [d for d in method_dir.iterdir() if d.is_dir()]
+            
+            for mode_dir in mode_dirs:
                 if not mode_dir.is_dir(): continue
-                mode = mode_dir.name
-                print(f"  - Found Mode: {mode}")
-                for dataset_lang_dir in mode_dir.iterdir():
-                    if not dataset_lang_dir.is_dir(): continue
-                    dataset_lang_name = dataset_lang_dir.name # e.g., WildStory_en
-                    
-                    # Split dataset_base and lang
-                    parts = dataset_lang_name.split('_')
-                    if len(parts) < 2:
-                        print(f"    Warning: Could not parse lang from '{dataset_lang_name}'. Skipping.", file=sys.stderr)
-                        continue
-                    lang = parts[-1]
-                    dataset_base = '_'.join(parts[:-1])
-                    print(f"    - Found Dataset/Lang: {dataset_base} / {lang}")
+                
+                # 确定模式名称（如果没有多个模式，则默认为base）
+                if len(mode_dirs) > 1:
+                    has_multiple_modes = True
+                    mode = mode_dir.name
+                else:
+                    mode = "base"  # 默认模式
+                
+                print(f"  - Mode: {mode}")
+                
+                # 后续目录路径
+                dataset_path = mode_dir if has_multiple_modes else method_dir
+                
+                for dataset_dir in dataset_path.iterdir():
+                    if not dataset_dir.is_dir(): continue
+                    dataset_name = dataset_dir.name
+                    print(f"    - Found Dataset: {dataset_name}")
 
-                    for story_out_dir in dataset_lang_dir.iterdir():
-                        if not story_out_dir.is_dir(): continue
-                        story_id_out = story_out_dir.name
-                        # print(f"      - Found Story ID: {story_id_out}") # Can be verbose
+                    for language_dir in dataset_dir.iterdir():
+                        if not language_dir.is_dir(): continue
+                        language = language_dir.name
+                        print(f"      - Found Language: {language}")
 
-                        # Check if this story ID exists in our scanned datasets
-                        if not any(s['id'] == story_id_out and s['dataset_base'] == dataset_base for s in manifest['stories']):
-                             print(f"      Warning: Output found for story '{dataset_base}/{story_id_out}' but this story wasn't found in datasets. Skipping outputs for it.", file=sys.stderr)
-                             continue
+                        for story_dir in language_dir.iterdir():
+                            if not story_dir.is_dir(): continue
+                            story_id = story_dir.name
+                            # print(f"        - Found Story ID: {story_id}")  # 可能会很冗长
 
-                        for timestamp_dir in story_out_dir.iterdir():
-                            if not timestamp_dir.is_dir(): continue
-                            timestamp = timestamp_dir.name
-                            # Check if timestamp folder contains expected output files (optional but good)
-                            if list(timestamp_dir.glob('shot_*.png')): # Check for at least one png
-                                # print(f"        - Found Timestamp: {timestamp}") # Can be verbose
-                                manifest["outputs"][method][mode][dataset_base][lang][story_id_out].append(timestamp)
-                                # Sort timestamps for consistency (e.g., newest first)
-                                manifest["outputs"][method][mode][dataset_base][lang][story_id_out].sort(reverse=True)
-                            # else:
-                            #     print(f"        Warning: Timestamp folder '{timestamp}' found but contains no 'shot_*.png' files. Skipping.")
+                            # 检查故事ID是否存在于我们扫描的数据集中
+                            if not any(s['id'] == story_id and s['dataset_base'] == dataset_name for s in manifest['stories']):
+                                print(f"        Warning: Output found for story '{dataset_name}/{story_id}' but this story wasn't found in datasets.", file=sys.stderr)
+                                # 继续处理，不跳过
+
+                            for timestamp_dir in story_dir.iterdir():
+                                if not timestamp_dir.is_dir(): continue
+                                timestamp = timestamp_dir.name
+                                
+                                # 获取该时间戳目录下的所有图像
+                                shots = []
+                                for shot_file in timestamp_dir.glob('shot_*.png'):
+                                    shots.append(shot_file.name)
+                                
+                                if shots:  # 如果找到了图像
+                                    shots.sort()  # 排序以保持一致性
+                                    # print(f"          - Found Timestamp: {timestamp} with {len(shots)} shots")
+                                    
+                                    # 将shots列表存储到manifest中
+                                    if manifest["outputs"][method][mode][dataset_name][language].get(story_id) is None:
+                                        manifest["outputs"][method][mode][dataset_name][language][story_id] = {}
+                                    
+                                    manifest["outputs"][method][mode][dataset_name][language][story_id][timestamp] = shots
+                            
+                            # 按时间戳排序（例如，最新的在前）
+                            if story_id in manifest["outputs"][method][mode][dataset_name][language]:
+                                # 将字典转换为排序后的字典
+                                sorted_timestamps = sorted(manifest["outputs"][method][mode][dataset_name][language][story_id].keys(), reverse=True)
+                                sorted_dict = {}
+                                for ts in sorted_timestamps:
+                                    sorted_dict[ts] = manifest["outputs"][method][mode][dataset_name][language][story_id][ts]
+                                manifest["outputs"][method][mode][dataset_name][language][story_id] = sorted_dict
 
 
     # --- 3. Save Manifest ---
     print(f"\nSaving manifest to: {output_manifest_path}")
     try:
         output_manifest_path.parent.mkdir(parents=True, exist_ok=True) # Ensure directory exists
+        
+        # 将defaultdict转换为普通dict
+        manifest_json = {
+            "stories": manifest["stories"],
+            "outputs": {}
+        }
+        
+        for method, modes in manifest["outputs"].items():
+            manifest_json["outputs"][method] = {}
+            for mode, datasets in modes.items():
+                manifest_json["outputs"][method][mode] = {}
+                for dataset, languages in datasets.items():
+                    manifest_json["outputs"][method][mode][dataset] = {}
+                    for language, stories in languages.items():
+                        manifest_json["outputs"][method][mode][dataset][language] = {}
+                        for story_id, timestamps in stories.items():
+                            manifest_json["outputs"][method][mode][dataset][language][story_id] = timestamps
+        
         with open(output_manifest_path, 'w', encoding='utf-8') as f:
-            json.dump(manifest, f, indent=4, ensure_ascii=False)
+            json.dump(manifest_json, f, indent=4, ensure_ascii=False)
         print("Manifest generation successful.")
     except Exception as e:
         print(f"Error: Could not write manifest file to {output_manifest_path}: {e}", file=sys.stderr)

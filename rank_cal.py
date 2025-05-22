@@ -8,7 +8,7 @@ def read_tsv_data(file_path):
 # 或者从字符串读取
 def read_tsv_from_string(tsv_string):
     import io
-    return pd.read_csv(io.StringIO(tsv_string), sep='\t')
+    return pd.read_csv(io.StringIO(tsv_string), sep='\t',index_col=False)
 
 # 示例TSV字符串，可以替换为文件路径
 tsv_data = """Method	model	mode	Cross CSD Score (Ref-Gen)	Self CSD Score (Gen-Gen)	Cross Cref Score (Ref-Gen)	Self Cref Score (Gen-Gen)	Aesthetics Score	Inception Score	Prompt Align (Scene)	Prompt Align (Camera)	Prompt Align (Character Existence|Number) OCCM	Prompt Align (Global Character Action|Script)	Prompt Align (Local/Single Character Action|Script)	Prompt Align Avg（Alignment score）

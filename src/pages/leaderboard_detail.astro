@@ -69,20 +69,28 @@ Naive baseline	base	base	0.736	0.773	0.932	0.996	4.396	5.474	0.532	2.021	1	0.671
  * Represents the parsed TSV data, including headers and an array of data rows.
  */
 
+// Define interfaces for better type checking in Astro's TypeScript environment
+interface DataRow {
+    [key: string]: string;
+}
+
+interface ParsedTSVData {
+    headers: string[];
+    data: DataRow[];
+}
+
 /**
  * Parses a TSV string into an object containing headers and data rows.
  * @param {string} tsvString The TSV string to parse.
  * @returns {ParsedTSVData}
  */
-function parseTSV(tsvString) {
+function parseTSV(tsvString: string): ParsedTSVData {
     const lines = tsvString.trim().split('\n');
-    const headers = lines[0].split('\t').map(/** @param {string} h */ (h) => h.trim().replace(/^"|"$/g, '').replace(/\r$/, ''));
-    const data = lines.slice(1).map(/** @param {string} line */ (line) => {
+    const headers = lines[0].split('\t').map((h: string) => h.trim().replace(/^"|"$/g, '').replace(/\r$/, ''));
+    const data = lines.slice(1).map((line: string) => {
         const values = line.split('\t');
-        /** @type {DataRow} */
-        const row = {};
-        headers.forEach(/** @param {string} header 
-                           @param {number} index */ (header, index) => {
+        const row: DataRow = {};
+        headers.forEach((header: string, index: number) => {
             // Ensure we don't try to access out-of-bounds values if a data row has fewer columns than headers
             row[header] = values[index] ? values[index].trim().replace(/^"|"$/g, '').replace(/\r$/, '') : '';
         });
@@ -99,7 +107,7 @@ const benchmarkClassData = { /* Paste benchmarkClassData JSON here if needed by 
 const bestOfModeData = {
     "Storyadapter":"(Img ref)(scale0)",
     "Storydiffusion":"(Img ref) (photomaker)",
-    "Storygen":"Mix",
+    "Storygen":"Multi-image-condition",
     "Movieagent":"SD-3 version",
     "Vlogger":"text only"
 };
